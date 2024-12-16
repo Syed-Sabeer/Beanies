@@ -9,7 +9,7 @@ File: product list table init Js File
 
 var productListData = [{
     'id': 1,
-    "productImg": "../assets/images/products/img-10.png",
+    "productImg": "assets/images/products/img-10.png",
     "productTitle": "World's most expensive t shirt",
     "category": "Fashion",
     "price": "354.99",
@@ -20,7 +20,7 @@ var productListData = [{
     "size": ["s", "m", "l"],
 }, {
     'id': 2,
-    "productImg": "../assets/images/products/img-15.png",
+    "productImg": "assets/images/products/img-15.png",
     "productTitle": "Like Style Women Black Handbag",
     "category": "Fashion",
     "price": "742.00",
@@ -30,7 +30,7 @@ var productListData = [{
     "color": ["light", "dark"],
 }, {
     'id': 3,
-    "productImg": "../assets/images/products/img-1.png",
+    "productImg": "assets/images/products/img-1.png",
     "productTitle": "Black Horn Backpack For Men Bags 30 L Backpack",
     "category": "Grocery",
     "price": "150.99",
@@ -41,7 +41,7 @@ var productListData = [{
     "size": ["s", "m", "l"],
 }, {
     'id': 4,
-    "productImg": "../assets/images/products/img-7.png",
+    "productImg": "assets/images/products/img-7.png",
     "productTitle": "Innovative education book",
     "category": "Kids",
     "price": "96.26",
@@ -50,7 +50,7 @@ var productListData = [{
     "stock": "In stock",
 }, {
     'id': 5,
-    "productImg": "../assets/images/products/img-4.png",
+    "productImg": "assets/images/products/img-4.png",
     "productTitle": "Sangria Girls Mint Green & Off-White Solid Open Toe Flats",
     "category": "Kids",
     "price": "96.26",
@@ -61,7 +61,7 @@ var productListData = [{
     "size": ["40", "41", "42"],
 }, {
     'id': 6,
-    "productImg": "../assets/images/products/img-5.png",
+    "productImg": "assets/images/products/img-5.png",
     "productTitle": "Lace-Up Casual Shoes For Men",
     "category": "Fashion",
     "price": "229.00",
@@ -72,7 +72,7 @@ var productListData = [{
     "size": ["40", "41", "42"],
 }, {
     'id': 7,
-    "productImg": "../assets/images/products/img-6.png",
+    "productImg": "assets/images/products/img-6.png",
     "productTitle": "Striped High Neck Casual Men Orange Sweater",
     "category": "Fashion",
     "price": "120.00",
@@ -82,7 +82,7 @@ var productListData = [{
     "size": ["s", "m", "l", "xl"],
 }, {
     'id': 8,
-    "productImg": "../assets/images/products/img-9.png",
+    "productImg": "assets/images/products/img-9.png",
     "productTitle": "Lace-Up Casual Shoes For Men",
     "category": "Kids",
     "price": "229.00",
@@ -93,7 +93,7 @@ var productListData = [{
     "size": ["s", "l"],
 }, {
     'id': 9,
-    "productImg": "../assets/images/products/img-10.png",
+    "productImg": "assets/images/products/img-10.png",
     "productTitle": "Printed, Typography Men Round Neck Black T-shirt",
     "category": "Fashion",
     "price": "81.99",
@@ -104,7 +104,7 @@ var productListData = [{
     "size": ["s", "m", "l", "xl"],
 }, {
     'id': 10,
-    "productImg": "../assets/images/products/img-12.png",
+    "productImg": "assets/images/products/img-12.png",
     "productTitle": "Carven Lounge Chair Red",
     "category": "Furniture",
     "price": "209.99",
@@ -114,7 +114,7 @@ var productListData = [{
     "color": ["secondary", "dark", "danger", "light"],
 }, {
     'id': 11,
-    "productImg": "../assets/images/products/img-3.png",
+    "productImg": "assets/images/products/img-3.png",
     "productTitle": "Ninja Pro Max Smartwatch",
     "category": "Watches",
     "price": "309.09",
@@ -124,7 +124,7 @@ var productListData = [{
     "color": ["secondary", "info"],
 }, {
     'id': 12,
-    "productImg": "../assets/images/products/img-2.png",
+    "productImg": "assets/images/products/img-2.png",
     "productTitle": "Opinion Striped Round Neck Green T-shirt",
     "category": "Fashion",
     "price": "126.99",
@@ -393,7 +393,7 @@ var productListData = [{
         });
     });
 
-    
+
     // rating-filter
     document.querySelectorAll("#rating-filter .form-check").forEach(function (item) {
         var inputVal = item.querySelector(".form-check-input").value;
@@ -430,7 +430,7 @@ var productListData = [{
         });
     });
 
-    
+
     document.getElementById("sort-elem").addEventListener("change", function (e) {
         var inputVal = e.target.value
         if (inputVal == "low_to_high") {
