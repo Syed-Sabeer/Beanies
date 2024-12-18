@@ -1,0 +1,63 @@
+.customization-section {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .step {
+    background-color: #1d4b8f;
+    color: #ffffff;
+    font-weight: bold;
+    font-style: italic;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .price-details {
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .price-details span {
+    font-weight: bold;
+  }
+  .printing-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .option-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .option-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .option-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .option-card h3 {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #333;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .section-header {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
