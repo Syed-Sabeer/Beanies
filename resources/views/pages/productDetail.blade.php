@@ -271,10 +271,9 @@ background-position: center;
             <!-- Tab panes -->
             <div class="tab-content text-muted">
                 <div class="tab-pane active" id="pricechart" role="tabpanel">
-                    <table class="table fs-15 align-middle table-nowrap">
+                    <table class="table fs-15 align-middle table-nowrap mt-4">
                         <thead>
                             <tr>
-
                                 <th scope="col">Qty</th>
                                 @foreach($quantities as $quantity)
                                     <th scope="col">{{ $quantity }}</th>
@@ -287,12 +286,14 @@ background-position: center;
                                     <a href="#" class="text-body">Price</a>
                                 </td>
                                 @foreach($prices as $price)
-                                    <td class="fw-medium">${{ number_format($price, 2) }}</td>
+                                    <td class="fw-medium" data-price="{{ $price }}">
+                                        ${{ number_format($price, 2) }}
+                                    </td>
                                 @endforeach
                             </tr>
-
                         </tbody>
                     </table>
+
                 </div>
 
                 <div class="tab-pane" id="home1" role="tabpanel">
@@ -847,22 +848,29 @@ background-position: center;
         <div class="col-lg-8 ms-auto">
 
             <div class="container">
-                <div class="customization-section bg-white border border-light">
+                <div class="customization-section bg-white border border-light" id="customization-section">
 
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="step">
-                      STEP 1
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="step">
+                            STEP 1
+                        </div>
+                        <h2 class="h4 mb-0 ml-2">Enter Quantity</h2>
+                        <div class="price-details">
+                            Total Qty: <span id="total-qty">0</span> | Price: <span id="total-price">$0.00</span>
+                        </div>
                     </div>
-                    <h2 class="h4 mb-0 ml-2">Enter Quantity</h2>
-                    <div class="price-details">
-                      Total Qty: <span>12</span> | Price: <span>$168.12</span>
+
+                    <div>
+                        <input
+                            type="number"
+                            id="quantity-input"
+                            placeholder="Qty"
+                            class="form-control"
+                            min="0"
+                        >
                     </div>
-                  </div>
-             <div>
-                <input type="text" name="" id="" placeholder="Qty" class="form-control">
-             </div>
                 </div>
-              </div>
+            </div>
 
             <div class="container">
                 <div class="customization-section bg-white border border-light">
@@ -881,37 +889,41 @@ background-position: center;
                   <div class="form-group">
                     <label for="beanie-color" class="section-header">Select Beanies Color</label>
                     <select id="beanie-color" class="form-control">
-                      <option>Select Beanies Color</option>
-                      <option>Red</option>
-                      <option>Blue</option>
-                      <option>Green</option>
-                      <option>Yellow</option>
+                        <option>Select Beanies Color</option>
+                        @if(!empty($colorNames))
+                            @foreach($colorNames as $colorName)
+                                <option>{{ ucfirst($colorName) }}</option>
+                            @endforeach
+                        @else
+                            <option>No colors available</option>
+                        @endif
                     </select>
+
+
 
                     <div class="container">
                         <div class="section-header mt-4">
-                          Select Printing Option
+                            Select Printing Option
                         </div>
 
                         <div class="printing-options">
-                          <!-- Card 1 -->
-                          <div class="option-card">
-                            <img src="https://via.placeholder.com/300x150?text=No+Imprint+-+Blank" alt="No Imprint">
-                            <h3> Blank</h3>
-                          </div>
-                          <!-- Card 2 -->
-                          <div class="option-card">
-                            <img src="https://via.placeholder.com/300x150?text=Direct+Embroidery" alt="Direct Embroidery">
-                            <h3>Direct Embroidery</h3>
-                          </div>
-                          <!-- Card 3 -->
-                          <div class="option-card">
-                            <img src="https://via.placeholder.com/300x150?text=Direct+3D+Embroidery" alt="Direct 3D Embroidery">
-                            <h3>Direct 3D Embroidery</h3>
-                          </div>
+                            @if($productPrintings->isNotEmpty())
+                                @foreach($productPrintings as $printing)
+                                    <div class="option-card">
 
+                                        <img src="{{ asset('/' . $printing->image) }}" alt="{{ $printing->title }}">
+                                        <h3>{{ $printing->title }}</h3>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>No printing options available.</p>
+                            @endif
                         </div>
-                      </div>
+                    </div>
+
+
+
+
 
                       <div class="container my-5">
                         <h2 class="text-center mb-4">Upload Your Artwork</h2>
@@ -1053,6 +1065,64 @@ background-position: center;
 <!--end container-->
 </section>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const quantityInput = document.getElementById("quantity-input");
+        const totalQty = document.getElementById("total-qty");
+        const totalPrice = document.getElementById("total-price");
 
+        // Quantities and prices from the server
+        const quantities = @json($quantities).map(Number); // Ensure quantities are numbers
+        const prices = @json($prices).map(Number); // Ensure prices are numbers
+
+        // Get the minimum and maximum quantity from the available quantities
+        const minQuantity = Math.min(...quantities);
+        const maxQuantity = Math.max(...quantities);
+        const maxPrice = prices[quantities.indexOf(maxQuantity)];
+
+        // Set the minimum quantity as an attribute for input validation
+        quantityInput.setAttribute('min', minQuantity);
+
+        quantityInput.addEventListener("input", function () {
+            const enteredQty = parseInt(quantityInput.value) || 0;
+            totalQty.textContent = enteredQty;
+
+            let calculatedPrice = 0;
+
+            if (enteredQty > maxQuantity) {
+                // Use maxPrice for quantities greater than the maximum available quantity
+                calculatedPrice = maxPrice;
+            } else {
+                // Find the highest applicable price based on the entered quantity
+                for (let i = 0; i < quantities.length; i++) {
+                    if (enteredQty >= quantities[i]) {
+                        calculatedPrice = prices[i];
+                    }
+                }
+            }
+
+            // Calculate the total price and update it
+            if (calculatedPrice > 0) {
+                totalPrice.textContent = `$${(calculatedPrice * enteredQty).toFixed(2)}`;
+            } else {
+                totalPrice.textContent = `$0.00`; // Fallback if no price is matched
+            }
+        });
+
+        // Prevent entering a value below the minimum quantity
+        quantityInput.addEventListener("blur", function () {
+            const enteredQty = parseInt(quantityInput.value) || 0;
+
+            if (enteredQty < minQuantity) {
+                // Reset to minimum quantity and recalculate price
+                quantityInput.value = minQuantity;
+                totalQty.textContent = minQuantity;
+
+                const calculatedPrice = prices[quantities.indexOf(minQuantity)];
+                totalPrice.textContent = `$${(calculatedPrice * minQuantity).toFixed(2)}`;
+            }
+        });
+    });
+    </script>
 
 @endsection
