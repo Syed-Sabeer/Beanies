@@ -243,13 +243,14 @@ background-position: center;
 <!--end container-->
 </section>
 
-<section class="section pt-0">
-<div class="container">
+<section class="section pt-0 pb-0">
+    <h4 class="lh-base mb-1 p-3 mt-3" style="font-size: 2rem; color: #1d497e; background-color: #ECF1F4; text-align: center">
+        {{ $product->title }}
+    </h4>
+<div class="container mt-5">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="lh-base mb-1 p-5">
-                {{ $product->title }}
-            </h4>
+         
             <ul class="nav nav-tabs nav-tabs-custom mb-3" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-bs-toggle="tab" href="#pricechart" role="tab">
@@ -297,78 +298,10 @@ background-position: center;
                 </div>
 
                 <div class="tab-pane" id="home1" role="tabpanel">
-                    <table class="table table-sm table-borderless align-middle">
-                        <tr>
-                            <th>Type</th>
-                            <td>Round Neck</td>
-                        </tr>
-                        <tr>
-                            <th>Sleeve</th>
-                            <td>Short Sleeve</td>
-                        </tr>
-                        <tr>
-                            <th>Fit</th>
-                            <td>Regular</td>
-                        </tr>
-                        <tr>
-                            <th>Sales Package</th>
-                            <td>1 T shirt</td>
-                        </tr>
-                        <tr>
-                            <th>Pack of</th>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <th>Style Code</th>
-                            <td>HYP02</td>
-                        </tr>
-                        <tr>
-                            <th>Neck Type</th>
-                            <td>Round Neck</td>
-                        </tr>
-                        <tr>
-                            <th>Ideal For</th>
-                            <td>Men</td>
-                        </tr>
-                        <tr>
-                            <th>Size</th>
-                            <td>L</td>
-                        </tr>
-                        <tr>
-                            <th>Pattern</th>
-                            <td>Solid</td>
-                        </tr>
-                        <tr>
-                            <th>Suitable For</th>
-                            <td>Western Wear</td>
-                        </tr>
-                        <tr>
-                            <th>Fabric Care</th>
-                            <td>Do not bleach</td>
-                        </tr>
-                        <tr>
-                            <th>Seller</th>
-                            <td>Zibra Fashion</td>
-                        </tr>
-                        <tr>
-                            <th>Color</th>
-                            <td>
-                                <div class="avatar-xs">
-                                    <div class="avatar-title rounded"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    
 
-                    <p class="text-muted fs-15">
-                        Clothing serves many purposes: it can serve as protection from
-                        the elements, rough surfaces, sharp stones, rash-causing
-                        plants, insect bites, by providing a barrier between the skin
-                        and the environment. It is worth noting that a man's style
-                        goes beyond his outward appearance. Style is about more than
-                        the clothes you wear. It's who you are on the inside and how
-                        you present yourself to the outside world. It's having
-                        appreciation and cultivating gratitude.
+                    <p class=" fs-15">
+                        {{ $product->description }}
                     </p>
                 </div>
                 <div class="tab-pane" id="profile1" role="tabpanel">
@@ -756,7 +689,7 @@ background-position: center;
 </div>
 </section>
 
-<section class="section">
+<section class="section" >
 <div class="container">
     <div class="row gx-2">
         <div class="col-lg-4">
@@ -849,16 +782,21 @@ background-position: center;
 
             <div class="container">
                 <div class="customization-section bg-white border border-light" id="customization-section">
-
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="step">
-                            STEP 1
+                        <!-- Step 1 on the left -->
+                        <div class="d-flex align-items-center">
+                            <div class="step me-3">
+                                <strong>STEP 1</strong>
+                            </div>
+                            <h2 class="h4 mb-0">Enter Quantity</h2>
                         </div>
-                        <h2 class="h4 mb-0 ml-2">Enter Quantity</h2>
+                        
+                        <!-- Total quantity and price on the right -->
                         <div class="price-details">
                             Total Qty: <span id="total-qty">0</span> | Price: <span id="total-price">$0.00</span>
                         </div>
                     </div>
+                    
 
                     <div>
                         <input
@@ -876,14 +814,21 @@ background-position: center;
                 <div class="customization-section bg-white border border-light">
                   <!-- Header -->
                   <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="step">
-                      STEP 2
+                    <!-- Step 1 on the left -->
+                    <div class="d-flex align-items-center">
+                        <div class="step me-3">
+                            <strong>STEP 1</strong>
+                        </div>
+                        <h2 class="h4 mb-0">Customization</h2>
                     </div>
-                    <h2 class="h4 mb-0 ml-2">Customization</h2>
+                    
+                    <!-- Total quantity and price on the right -->
                     <div class="price-details">
-                      Total Qty: <span>12</span> | Price: <span>$168.12</span>
+                        Total Qty: <span id="total-qty">0</span> | Price: <span id="total-price">$0.00</span>
                     </div>
-                  </div>
+                </div>
+                
+           
 
                   <!-- Dropdown Section -->
                   <div class="form-group">
@@ -906,10 +851,10 @@ background-position: center;
                             Select Printing Option
                         </div>
 
-                        <div class="printing-options">
+                        <div class="printing-options ">
                             @if($productPrintings->isNotEmpty())
                                 @foreach($productPrintings as $printing)
-                                    <div class="option-card">
+                                    <div class="option-card ">
 
                                         <img src="{{ asset('/' . $printing->image) }}" alt="{{ $printing->title }}">
                                         <h3>{{ $printing->title }}</h3>
@@ -921,8 +866,8 @@ background-position: center;
                         </div>
                     </div>
 
-
-
+             
+                        
 
 
                       <div class="container my-5">
@@ -991,71 +936,8 @@ background-position: center;
 
 
                 </div>
-                <div class="d-flex align-items-center mb-4">
-                    <h5 class="fs-15 mb-0">Quantity:</h5>
-                    <div class="input-step ms-2">
-                        <button type="button" class="minus">–</button>
-                        <input type="number" class="product-quantity1" value="1" min="0" max="100"
-                            readonly="" />
-                        <button type="button" class="plus">+</button>
-                    </div>
-                </div>
-                <div class="row gy-3">
-                    <div class="col-md-6">
-                        <div>
-                            <h6 class="fs-14 fw-medium text-muted">Sizes:</h6>
-                            <ul class="clothe-size list-unstyled hstack gap-2 mb-0 flex-wrap">
-                                <li>
-                                    <input type="radio" name="sizes7" id="product-color-72" />
-                                    <label
-                                        class="avatar-xs btn btn-soft-primary text-uppercase p-0 fs-12 d-flex align-items-center justify-content-center rounded-circle"
-                                        for="product-color-72">s</label>
-                                </li>
-                                <li>
-                                    <input type="radio" name="sizes7" id="product-color-73" />
-                                    <label
-                                        class="avatar-xs btn btn-soft-primary text-uppercase p-0 fs-12 d-flex align-items-center justify-content-center rounded-circle"
-                                        for="product-color-73">m</label>
-                                </li>
-                                <li>
-                                    <input type="radio" name="sizes7" checked id="product-color-74" />
-                                    <label
-                                        class="avatar-xs btn btn-soft-primary text-uppercase p-0 fs-12 d-flex align-items-center justify-content-center rounded-circle"
-                                        for="product-color-74">l</label>
-                                </li>
-                                <li>
-                                    <input type="radio" name="sizes7" id="product-color-75" />
-                                    <label
-                                        class="avatar-xs btn btn-soft-primary text-uppercase p-0 fs-12 d-flex align-items-center justify-content-center rounded-circle"
-                                        for="product-color-75">xl</label>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h6 class="fs-14 fw-medium text-muted">Colors:</h6>
-                        <ul class="clothe-colors list-unstyled hstack gap-1 mb-0 flex-wrap ms-2">
-                            <li>
-                                <input type="radio" name="sizes" id="product-color-2" />
-                                <label
-                                    class="avatar-xs btn btn-info p-0 d-flex align-items-center justify-content-center rounded-circle"
-                                    for="product-color-2"></label>
-                            </li>
-                            <li>
-                                <input type="radio" name="sizes" id="product-color-3" />
-                                <label
-                                    class="avatar-xs btn btn-light p-0 d-flex align-items-center justify-content-center rounded-circle"
-                                    for="product-color-3"></label>
-                            </li>
-                            <li>
-                                <input type="radio" name="sizes" id="product-color-4" checked />
-                                <label
-                                    class="avatar-xs btn btn-primary p-0 d-flex align-items-center justify-content-center rounded-circle"
-                                    for="product-color-4"></label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+             
+              
             </div>
         </div>
         <!--end col-->
@@ -1066,6 +948,7 @@ background-position: center;
 </section>
 
 <script>
+    // Script For Calculating Price according to quantity
     document.addEventListener("DOMContentLoaded", function () {
         const quantityInput = document.getElementById("quantity-input");
         const totalQty = document.getElementById("total-qty");
@@ -1123,6 +1006,21 @@ background-position: center;
             }
         });
     });
-    </script>
 
+    // Script For Selecting an Embroidery card
+        document.addEventListener("DOMContentLoaded", function () {
+            const printingOptions = document.querySelectorAll(".option-card");
+        
+            // Handle printing option selection
+            printingOptions.forEach(option => {
+                option.addEventListener("click", function () {
+                    // Remove the "selected" class from all other options
+                    printingOptions.forEach(opt => opt.classList.remove("selected"));
+        
+                    // Add the "selected" class to the clicked option
+                    this.classList.add("selected");
+                });
+            });
+        });
+        </script>
 @endsection

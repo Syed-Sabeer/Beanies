@@ -61,3 +61,6 @@
     font-weight: bold;
     margin-bottom: 20px;
   }
+  .option-card.selected {
+    border-color: darkblue;
+} 
