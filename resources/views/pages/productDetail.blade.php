@@ -814,20 +814,19 @@ background-position: center;
                 <div class="customization-section bg-white border border-light">
                   <!-- Header -->
                   <div class="d-flex justify-content-between align-items-center mb-3">
-                    <!-- Step 1 on the left -->
+                    <!-- Step 2 on the left -->
                     <div class="d-flex align-items-center">
                         <div class="step me-3">
-                            <strong>STEP 1</strong>
+                            <strong>STEP 2</strong>
                         </div>
                         <h2 class="h4 mb-0">Customization</h2>
                     </div>
                     
                     <!-- Total quantity and price on the right -->
                     <div class="price-details">
-                        Total Qty: <span id="total-qty">0</span> | Price: <span id="total-price">$0.00</span>
+                        Total Qty: <span id="total-qty2">0</span> | Price: <span id="total-price2">$0.00</span>
                     </div>
                 </div>
-                
            
 
                   <!-- Dropdown Section -->
@@ -850,12 +849,15 @@ background-position: center;
                         <div class="section-header mt-4">
                             Select Printing Option
                         </div>
-
-                        <div class="printing-options ">
+                    
+                        <div class="printing-options">
                             @if($productPrintings->isNotEmpty())
                                 @foreach($productPrintings as $printing)
-                                    <div class="option-card ">
-
+                                    <div class="option-card printing-option" 
+                                         data-id="{{ $printing->id }}"
+                                         data-title="{{ $printing->title }}"
+                                         data-quantities="{{ json_encode($printing->quantity) }}"
+                                         data-prices="{{ json_encode($printing->price) }}">
                                         <img src="{{ asset('/' . $printing->image) }}" alt="{{ $printing->title }}">
                                         <h3>{{ $printing->title }}</h3>
                                     </div>
@@ -865,7 +867,7 @@ background-position: center;
                             @endif
                         </div>
                     </div>
-
+                    
              
                         
 
@@ -948,64 +950,197 @@ background-position: center;
 </section>
 
 <script>
-    // Script For Calculating Price according to quantity
-    document.addEventListener("DOMContentLoaded", function () {
-        const quantityInput = document.getElementById("quantity-input");
-        const totalQty = document.getElementById("total-qty");
-        const totalPrice = document.getElementById("total-price");
+document.addEventListener("DOMContentLoaded", function () {
+    const quantityInput = document.getElementById("quantity-input");
+    const totalQty = document.getElementById("total-qty");
+    const totalQtyCustomization = document.getElementById("total-qty2");
+    const totalPrice = document.getElementById("total-price");
+    const totalPriceCustomization = document.getElementById("total-price2");
+    const printingOptions = document.querySelectorAll(".printing-option");
 
-        // Quantities and prices from the server
-        const quantities = @json($quantities).map(Number); // Ensure quantities are numbers
-        const prices = @json($prices).map(Number); // Ensure prices are numbers
+    let selectedPrintingPrice = 0;  // Store price based on the selected printing option
+    let selectedPrintingQuantities = [];  // Store quantities for selected printing
+    let pricesForSelectedPrinting = [];  // Store prices for selected printing
 
-        // Get the minimum and maximum quantity from the available quantities
-        const minQuantity = Math.min(...quantities);
-        const maxQuantity = Math.max(...quantities);
-        const maxPrice = prices[quantities.indexOf(maxQuantity)];
+    // Quantities and prices from the server (for quantity-based price calculation)
+    const quantities = @json($quantities).map(Number);  // Ensure quantities are numbers
+    const prices = @json($prices).map(Number);  // Ensure prices are numbers
 
-        // Set the minimum quantity as an attribute for input validation
-        quantityInput.setAttribute('min', minQuantity);
+    console.log("Available Quantities: ", quantities);
+    console.log("Available Prices: ", prices);
 
-        quantityInput.addEventListener("input", function () {
-            const enteredQty = parseInt(quantityInput.value) || 0;
-            totalQty.textContent = enteredQty;
+    // Handle printing option selection
+    printingOptions.forEach(option => {
+        option.addEventListener("click", function () {
+            // Remove active class from all options
+            printingOptions.forEach(opt => opt.classList.remove("active"));
+            // Add active class to the clicked option
+            this.classList.add("active");
 
-            let calculatedPrice = 0;
+            // Get the selected printing option's quantities and prices
+            let quantitiesData = this.dataset.quantities;  // Raw data from the attribute
+            let pricesData = this.dataset.prices;  // Raw data from the attribute
 
-            if (enteredQty > maxQuantity) {
-                // Use maxPrice for quantities greater than the maximum available quantity
-                calculatedPrice = maxPrice;
+            console.log("Raw Quantities Data:", quantitiesData);
+            console.log("Raw Prices Data:", pricesData);
+
+            try {
+                // Parse the quantities and prices safely
+                selectedPrintingQuantities = JSON.parse(quantitiesData);
+                pricesForSelectedPrinting = JSON.parse(pricesData);
+
+                // Check if parsing was successful and log the results
+                console.log("Selected Quantities (parsed):", selectedPrintingQuantities);
+                console.log("Selected Prices (parsed):", pricesForSelectedPrinting);
+
+                // Ensure the parsed data is arrays of numbers
+                if (Array.isArray(selectedPrintingQuantities)) {
+                    selectedPrintingQuantities = selectedPrintingQuantities.map(Number);
+                }
+
+                if (Array.isArray(pricesForSelectedPrinting)) {
+                    pricesForSelectedPrinting = pricesForSelectedPrinting.map(Number);
+                }
+
+                console.log("Selected Quantities after mapping to numbers:", selectedPrintingQuantities);
+                console.log("Selected Prices after mapping to numbers:", pricesForSelectedPrinting);
+            } catch (error) {
+                console.error("Error parsing quantities or prices data:", error);
+            }
+
+            // Recalculate total price after selecting the printing option
+            updatePrintingPriceAndTotal();
+        });
+    });
+
+    // Function to calculate printing price based on quantity
+    function calculatePrintingPrice(quantity, quantities, prices) {
+        let price = 0;  // Default to 0 if no match is found
+
+        console.log("Calculating price for quantity:", quantity);
+
+        // Ensure quantity is a valid number
+        quantity = parseInt(quantity);
+
+        if (isNaN(quantity)) {
+            console.error("Invalid quantity entered");
+            return price;  // Return 0 if the quantity is invalid
+        }
+
+        // Ensure quantities and prices are arrays
+        if (!Array.isArray(quantities)) {
+            console.error("Quantities is not an array. Parsing the quantities...");
+            quantities = JSON.parse(quantities);  // Ensure it is an array if it's a string
+        }
+
+        if (!Array.isArray(prices)) {
+            console.error("Prices is not an array. Parsing the prices...");
+            prices = JSON.parse(prices);  // Ensure it is an array if it's a string
+        }
+
+        // Now, parse quantities and prices as numbers
+        quantities = quantities.map(q => parseInt(q));
+        prices = prices.map(p => parseFloat(p));
+
+        console.log("Parsed Quantities:", quantities);
+        console.log("Parsed Prices:", prices);
+
+        // Loop through the quantities array to find the exact match
+        for (let i = 0; i < quantities.length; i++) {
+            console.log(`Checking if ${quantity} matches ${quantities[i]}`);
+            if (quantity === quantities[i]) {
+                price = prices[i];
+                console.log("Exact match found:", price);
+                return price;
+            }
+        }
+
+        // If no exact match is found, find the largest quantity less than or equal to the entered quantity
+        console.log("No exact match found, checking for the largest valid quantity...");
+        let closestQuantity = -1;
+        for (let i = quantities.length - 1; i >= 0; i--) {
+            if (quantity >= quantities[i]) {
+                closestQuantity = quantities[i];
+                price = prices[i];
+                break;
+            }
+        }
+
+        if (closestQuantity === -1) {
+            console.error("No valid quantity found for the entered amount.");
+        } else {
+            console.log("Using closest quantity:", closestQuantity, "with price:", price);
+        }
+
+        return price;
+    }
+
+    // Function to update the printing price and calculate total price
+    function updatePrintingPriceAndTotal() {
+        const enteredQty = parseInt(quantityInput.value) || 0;
+        totalQty.textContent = enteredQty;
+        totalQtyCustomization.textContent = enteredQty;
+
+        // Recalculate the printing price based on the selected quantity
+        selectedPrintingPrice = calculatePrintingPrice(enteredQty, selectedPrintingQuantities, pricesForSelectedPrinting);
+
+        console.log("Selected Printing Price:", selectedPrintingPrice);
+
+        calculateTotalPrice(); // Recalculate the total price after updating printing price
+    }
+
+    // Calculate total price based on quantity and selected printing option
+    function calculateTotalPrice() {
+        const enteredQty = parseInt(quantityInput.value) || 0;
+        totalQty.textContent = enteredQty;
+        totalQtyCustomization.textContent = enteredQty;
+
+        let calculatedPrice = 0;
+
+        // Calculate base price based on quantity (default pricing)
+        if (enteredQty > 0) {
+            if (enteredQty > Math.max(...quantities)) {
+                calculatedPrice = prices[prices.length - 1];  // Use the highest price if quantity exceeds max
             } else {
-                // Find the highest applicable price based on the entered quantity
                 for (let i = 0; i < quantities.length; i++) {
                     if (enteredQty >= quantities[i]) {
                         calculatedPrice = prices[i];
                     }
                 }
             }
+        }
 
-            // Calculate the total price and update it
-            if (calculatedPrice > 0) {
-                totalPrice.textContent = `$${(calculatedPrice * enteredQty).toFixed(2)}`;
-            } else {
-                totalPrice.textContent = `$0.00`; // Fallback if no price is matched
-            }
-        });
+        console.log("Calculated Price based on Quantity:", calculatedPrice);
 
-        // Prevent entering a value below the minimum quantity
-        quantityInput.addEventListener("blur", function () {
-            const enteredQty = parseInt(quantityInput.value) || 0;
+        // Now calculate the total price by adding the printing price if available
+        const total = (calculatedPrice * enteredQty) + (selectedPrintingPrice * enteredQty);
+        console.log("Total Price Calculated:", total);
 
-            if (enteredQty < minQuantity) {
-                // Reset to minimum quantity and recalculate price
-                quantityInput.value = minQuantity;
-                totalQty.textContent = minQuantity;
+        // Update the displayed total price
+        if (isNaN(total)) {
+            totalPrice.textContent = "$0.00";
+            totalPriceCustomization.textContent = "$0.00";  // Ensure this is also updated
+        } else {
+            totalPrice.textContent = `$${total.toFixed(2)}`;
 
-                const calculatedPrice = prices[quantities.indexOf(minQuantity)];
-                totalPrice.textContent = `$${(calculatedPrice * minQuantity).toFixed(2)}`;
-            }
-        });
+            // Display calculated price for the selected printing option in the second field
+            totalPriceCustomization.textContent = `$${(selectedPrintingPrice * enteredQty).toFixed(2)}`;
+        }
+    }
+
+    // Update price when quantity is entered
+    quantityInput.addEventListener("input", updatePrintingPriceAndTotal);
+
+    // Prevent entering a value below the minimum quantity
+    quantityInput.addEventListener("blur", function () {
+        const enteredQty = parseInt(quantityInput.value) || 0;
+        if (enteredQty < Math.min(...quantities)) {
+            quantityInput.value = Math.min(...quantities);
+            calculateTotalPrice();
+        }
     });
+});
+
 
     // Script For Selecting an Embroidery card
         document.addEventListener("DOMContentLoaded", function () {
