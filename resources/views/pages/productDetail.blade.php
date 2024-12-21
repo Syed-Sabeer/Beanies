@@ -277,7 +277,7 @@ background-position: center;
                             <tr>
                                 <th scope="col">Qty</th>
                                 @foreach($quantities as $quantity)
-                                    <th scope="col">{{ $quantity }}</th>
+                                    <th scope="col" data-quantity="{{ $quantity }}">{{ $quantity }}</th>
                                 @endforeach
                             </tr>
                         </thead>
