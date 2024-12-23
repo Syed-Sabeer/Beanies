@@ -250,7 +250,7 @@ background-position: center;
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-12">
-         
+
             <ul class="nav nav-tabs nav-tabs-custom mb-3" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-bs-toggle="tab" href="#pricechart" role="tab">
@@ -298,7 +298,7 @@ background-position: center;
                 </div>
 
                 <div class="tab-pane" id="home1" role="tabpanel">
-                    
+
 
                     <p class=" fs-15">
                         {{ $product->description }}
@@ -694,38 +694,32 @@ background-position: center;
     <div class="row gx-2">
         <div class="col-lg-4">
             <div class="row">
-                <div class="col-md-2">
-                    <div thumbsSlider="" class="swiper productSwiper mb-3 mb-lg-0">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="product-thumb rounded cursor-pointer">
-                                    <img src="../assets/images/products/img-31.png" alt="" class="img-fluid" />
+                <div class="col-md-3 mb-3">
+                    <div thumbsSlider="" class="swiper productSwiper mb-3 mb-lg-0 d-flex">
+                        <div class="swiper-wrapper d-flex" id="thumbnail-wrapper">
+                            @foreach(json_decode($product->base_images, true) as $image)
+                                <div class="swiper-slide base-image">
+                                    <div class="product-thumb rounded cursor-pointer">
+                                        <img src="{{ asset('storage/' . $image) }}" alt="Product Base Image" class="img-fluid" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-thumb rounded cursor-pointer">
-                                    <img src="../assets/images/products/img-31.png" alt="" class="img-fluid" />
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-thumb rounded cursor-pointer">
-                                    <img src="../assets/images/products/img-32.png" alt="" class="img-fluid" />
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-thumb rounded cursor-pointer">
-                                    <img src="../assets/images/products/img-34.png" alt="" class="img-fluid" />
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="product-thumb rounded cursor-pointer">
-                                    <img src="../assets/images/products/img-34.png" class="img-fluid" />
-                                </div>
-                            </div>
+                            @endforeach
+
+                            @if($colors && !empty($colors->images))
+                                @foreach(json_decode($colors->images, true) as $index => $image)
+                                    <div class="swiper-slide color-image" data-color="{{ strtolower(json_decode($colors->color, true)[$index]) }}">
+                                        <div class="product-thumb rounded cursor-pointer">
+                                            <img src="{{ asset('storage/' . $image) }}" alt="Product Color Image" class="img-fluid" />
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
+
                     </div>
                 </div>
-                <!--end col-->
+
+                <!-- Main Product Images -->
                 <div class="col-md-10">
                     <div class="bg-light rounded-2 position-relative ribbon-box overflow-hidden">
                         <div class="ribbon ribbon-danger ribbon-shape trending-ribbon">
@@ -733,48 +727,50 @@ background-position: center;
                             <i class="ri-flashlight-fill text-white align-bottom float-end ms-1"></i>
                         </div>
                         <div class="swiper productSwiper2">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="../assets/images/products/img-31.png" alt="" class="img-fluid" />
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../assets/images/products/img-33.png" alt="" class="img-fluid" />
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../assets/images/products/img-32.png" alt="" class="img-fluid" />
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../assets/images/products/img-34.png" alt="" class="img-fluid" />
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="../assets/images/products/img-34.png" alt="" class="img-fluid" />
-                                </div>
+                            <div class="swiper-wrapper" id="main-view-wrapper">
+                                @foreach(json_decode($product->base_images, true) as $image)
+                                    <div class="swiper-slide base-image">
+                                        <img src="{{ asset('storage/' . $image) }}" alt="Product Image" class="img-fluid" />
+                                    </div>
+                                @endforeach
+
+                                @if($colors && !empty($colors->images))
+                                    @foreach(json_decode($colors->images, true) as $index => $image)
+                                        <div class="swiper-slide color-image" data-color="{{ strtolower(json_decode($colors->color, true)[$index]) }}">
+                                            <img src="{{ asset('storage/' . $image) }}" alt="Color Variation Image" class="img-fluid" />
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
+
+
                             <div class="swiper-button-next bg-transparent"></div>
                             <div class="swiper-button-prev bg-transparent"></div>
                         </div>
                     </div>
                 </div>
-                <!--end col-->
-                <div class="col-lg-12">
-                    <div class="mt-3">
-                        <div class="hstack gap-2">
-                            <button type="button" class="btn btn-success btn-hover w-100">
-                                <i class="bi bi-basket2 me-2"></i> Add To Cart
-                            </button>
-                            <button type="button" class="btn btn-primary btn-hover w-100">
-                                <i class="bi bi-cart2 me-2"></i> Buy Now
-                            </button>
-                            <button class="btn btn-soft-danger custom-toggle btn-hover" data-bs-toggle="button"
-                                aria-pressed="true">
-                                <span class="icon-on"><i class="ri-heart-line"></i></span>
-                                <span class="icon-off"><i class="ri-heart-fill"></i></span>
-                            </button>
-                        </div>
+
+
+            </div>
+
+            <!-- Product Action Buttons -->
+            <div class="col-lg-12">
+                <div class="mt-3">
+                    <div class="hstack gap-2">
+                        <button type="button" class="btn btn-success btn-hover w-100">
+                            <i class="bi bi-basket2 me-2"></i> Add To Cart
+                        </button>
+                        <button type="button" class="btn btn-primary btn-hover w-100">
+                            <i class="bi bi-cart2 me-2"></i> Buy Now
+                        </button>
+                        <button class="btn btn-soft-danger custom-toggle btn-hover" data-bs-toggle="button" aria-pressed="true">
+                            <span class="icon-on"><i class="ri-heart-line"></i></span>
+                            <span class="icon-off"><i class="ri-heart-fill"></i></span>
+                        </button>
                     </div>
                 </div>
-                <!--end col-->
             </div>
+
             <!--end row-->
         </div>
         <!--end col-->
@@ -790,13 +786,13 @@ background-position: center;
                             </div>
                             <h2 class="h4 mb-0">Enter Quantity</h2>
                         </div>
-                        
+
                         <!-- Total quantity and price on the right -->
                         <div class="price-details">
                             Total Qty: <span id="total-qty">0</span> | Price: <span id="total-price">$0.00</span>
                         </div>
                     </div>
-                    
+
 
                     <div>
                         <input
@@ -821,39 +817,71 @@ background-position: center;
                         </div>
                         <h2 class="h4 mb-0">Customization</h2>
                     </div>
-                    
+
                     <!-- Total quantity and price on the right -->
                     <div class="price-details">
                         Total Qty: <span id="total-qty2">0</span> | Price: <span id="total-price2">$0.00</span>
                     </div>
                 </div>
-           
+
 
                   <!-- Dropdown Section -->
                   <div class="form-group">
                     <label for="beanie-color" class="section-header">Select Beanies Color</label>
                     <select id="beanie-color" class="form-control">
                         <option>Select Beanies Color</option>
+                        <option value="all">All Colors</option>
                         @if(!empty($colorNames))
                             @foreach($colorNames as $colorName)
-                                <option>{{ ucfirst($colorName) }}</option>
+                                <option value="{{ strtolower($colorName) }}">{{ ucfirst($colorName) }}</option>
                             @endforeach
                         @else
                             <option>No colors available</option>
                         @endif
                     </select>
 
+                    <script>
+document.getElementById('beanie-color').addEventListener('change', function () {
+    const selectedColor = this.value.toLowerCase(); // Get the selected color
+    const mainViewWrapper = document.getElementById('main-view-wrapper');
+    const thumbnailWrapper = document.getElementById('thumbnail-wrapper');
+
+    // Get all slides
+    const baseImages = Array.from(mainViewWrapper.querySelectorAll('.base-image'));
+    const colorImages = Array.from(mainViewWrapper.querySelectorAll('.color-image'));
+
+    // Reset the main view
+    mainViewWrapper.innerHTML = '';
+
+    // Add base images back to the main view
+    baseImages.forEach(image => mainViewWrapper.appendChild(image));
+
+    if (selectedColor === 'all' || selectedColor === 'select beanies color') {
+        // Show all color images if "All Colors" or default option is selected
+        colorImages.forEach(image => mainViewWrapper.appendChild(image));
+    } else {
+        // Filter and show selected color images
+        colorImages.forEach(image => {
+            if (image.dataset.color === selectedColor) {
+                mainViewWrapper.appendChild(image);
+            }
+        });
+    }
+});
+
+
+                    </script>
 
 
                     <div class="container">
                         <div class="section-header mt-4">
                             Select Printing Option
                         </div>
-                    
+
                         <div class="printing-options">
                             @if($productPrintings->isNotEmpty())
                                 @foreach($productPrintings as $printing)
-                                    <div class="option-card printing-option" 
+                                    <div class="option-card printing-option"
                                          data-id="{{ $printing->id }}"
                                          data-title="{{ $printing->title }}"
                                          data-quantities="{{ json_encode($printing->quantity) }}"
@@ -867,9 +895,9 @@ background-position: center;
                             @endif
                         </div>
                     </div>
-                    
-             
-                        
+
+
+
 
 
                       <div class="container my-5">
@@ -938,8 +966,8 @@ background-position: center;
 
 
                 </div>
-             
-              
+
+
             </div>
         </div>
         <!--end col-->
@@ -1113,7 +1141,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Calculated Price based on Quantity:", calculatedPrice);
 
         // Now calculate the total price by adding the printing price if available
-        const total = (calculatedPrice * enteredQty) + (selectedPrintingPrice * enteredQty);
+        const total = (calculatedPrice * enteredQty);
+        // const total = (calculatedPrice * enteredQty) + (selectedPrintingPrice * enteredQty);
         console.log("Total Price Calculated:", total);
 
         // Update the displayed total price
@@ -1145,17 +1174,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Script For Selecting an Embroidery card
         document.addEventListener("DOMContentLoaded", function () {
             const printingOptions = document.querySelectorAll(".option-card");
-        
+
             // Handle printing option selection
             printingOptions.forEach(option => {
                 option.addEventListener("click", function () {
                     // Remove the "selected" class from all other options
                     printingOptions.forEach(opt => opt.classList.remove("selected"));
-        
+
                     // Add the "selected" class to the clicked option
                     this.classList.add("selected");
                 });
             });
         });
         </script>
+<script>
+    document.getElementById('beanie-color').addEventListener('change', function() {
+      const selectedColor = this.value.toLowerCase();
+      const colorImages = document.querySelectorAll('.product-color-image');
+
+      colorImages.forEach(image => {
+        const colorName = image.dataset.color.toLowerCase();
+
+        // Show images that match the selected color
+        if (selectedColor === colorName || selectedColor === '') {
+          image.style.display = 'block';
+        } else {
+          image.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
 @endsection
