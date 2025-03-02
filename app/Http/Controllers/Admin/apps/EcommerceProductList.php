@@ -84,7 +84,7 @@ class EcommerceProductList extends Controller
     public function edit($id)
     {
         // Retrieve the product with its related pricing, color images, and base images
-        $product = Product::with(['productPricing', 'productColors', 'productBaseImages'])->findOrFail($id);
+        $product = Product::with(['productPricing', 'productColors.componentColor', 'productBaseImages'])->findOrFail($id);
     
         // Fetch available color options for the product
         $colorData = ComponentProductColor::all();
@@ -97,19 +97,22 @@ class EcommerceProductList extends Controller
     
     public function update($id, Request $request)
     {
-        // Validate the incoming request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'is_pompom' => 'required|boolean',
-            'base_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'color.*' => 'required|string',
-            'images.*.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'quantity.*' => 'required|integer',
-            'pricing.*' => 'required|numeric',
-        ]);
-    
+        
         try {
+            // Validate the incoming request
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:products,slug,'.$id,
+                'description' => 'required|string',
+                'is_pompom' => 'required|integer',
+                'base_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'color.*' => 'nullable|string',
+                'images.*.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'quantity.*' => 'required|integer',
+                'pricing.*' => 'required|numeric',
+                'reseller_pricing.*' => 'required|numeric',
+            ]);
+            DB::beginTransaction();
             // Find the product by its ID
             $product = Product::findOrFail($id);
     
@@ -117,57 +120,114 @@ class EcommerceProductList extends Controller
             $product->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'slug' => $request->slug,
                 'is_pompom' => $request->is_pompom,
             ]);
     
             // Handle base image upload, color images, and pricing as in the `store` method...
     
-            // Process and update base images
+            // Process and store base images
             if ($request->hasFile('base_images')) {
                 foreach ($request->file('base_images') as $baseImage) {
+                    Log::info('Processing base image: ', [$baseImage->getClientOriginalName()]);
                     $baseImagePath = $baseImage->store('ProductImages', 'public');
                     if ($baseImagePath) {
-                        ProductBaseImage::updateOrCreate(
-                            ['product_id' => $product->id],
-                            ['base_image' => $baseImagePath]
-                        );
+                        ProductBaseImage::create([
+                            'product_id' => $product->id,
+                            'base_image' => $baseImagePath,
+                        ]);
                     } else {
+                        Log::error('Base image upload failed for file: ', [$baseImage->getClientOriginalName()]);
                         return redirect()->back()->with('error', 'Base image upload failed.');
                     }
                 }
             }
     
-            // Process and update color images
-            foreach ($request->color as $index => $colorId) {
-                if ($request->hasFile("images.$index")) {
-                    foreach ($request->file("images.$index") as $colorImage) {
-                        $colorImagePath = $colorImage->store('ProductImages/ColorVariations', 'public');
-                        if ($colorImagePath) {
-                            ProductColor::updateOrCreate(
-                                ['product_id' => $product->id, 'color_id' => $colorId],
-                                ['image' => $colorImagePath]
-                            );
-                        } else {
-                            return redirect()->back()->with('error', 'Color image upload failed.');
+            // Process and store color images
+            if(isset($request->color) && count($request->color) > 0){
+                foreach ($request->color as $index => $colorId) {
+                    Log::info("Processing color ID $colorId with images:");
+                    if ($request->hasFile("images.$index")) {
+                        foreach ($request->file("images.$index") as $colorImage) {
+                            Log::info('Processing color image: ', [$colorImage->getClientOriginalName()]);
+                            $colorImagePath = $colorImage->store('ProductImages/ColorVariations', 'public');
+                            if ($colorImagePath) {
+                                ProductColor::create([
+                                    'product_id' => $product->id,
+                                    'color_id' => $colorId, // Store the color ID here
+                                    'image' => $colorImagePath,
+                                ]);
+                            } else {
+                                return redirect()->back()->with('error', 'Color image upload failed.');
+                            }
                         }
                     }
                 }
             }
     
+
+            // 🔴 DELETE ALL EXISTING PRODUCT PRICING FIRST
+            ProductPricing::where('product_id', $id)->delete();
             // Save product pricing in separate rows
             foreach ($request->quantity as $index => $quantity) {
-                ProductPricing::updateOrCreate(
-                    ['product_id' => $product->id, 'quantity' => $quantity],
-                    ['pricing' => $request->pricing[$index]]
-                );
+                Log::info("Processing pricing", [
+                    'Quantity' => $quantity,
+                    'Price' => $request->pricing[$index],
+                    'Reseller Price' => $request->reseller_pricing[$index],
+                ]);
+
+                ProductPricing::create([
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'pricing' => $request->pricing[$index],
+                    'reseller_pricing' => $request->reseller_pricing[$index], // Fix the column name
+                ]);
+
             }
     
+            DB::commit();
             // Return a success response or redirect
-            return redirect()->route('app-ecommerce-product-list')->with('success', 'Product updated successfully!');
+            return redirect()->back()->with('success', 'Product updated successfully!');
         } catch (\Exception $e) {
+            DB::rollBack();
             // Log error and return failure response
             Log::error("Error occurred while updating product: " . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to update product. Please try again.');
+        }
+    }
+
+    public function deleteProductColor($id)
+    {
+        try {
+            $productColor = ProductColor::findOrFail($id);
+            if($productColor){
+                $productColor->delete();
+                return redirect()->back()->with('success', 'Product Color has been removed successfully.');
+            }else{
+                return redirect()->back()->with('error', 'Product Color not found.');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            Log::error("Error occurred while deleting product color: " . $th->getMessage());
+            return redirect()->back()->with('error', 'Failed to delete product color. Please try again.');
+        }
+    }
+
+    public function deleteProductBaseImage($id)
+    {
+        try {
+            // dd($id);
+            $productBaseImage = ProductBaseImage::findOrFail($id);
+            if($productBaseImage){
+                $productBaseImage->delete();
+                return redirect()->back()->with('success', 'Product Base Image has been removed successfully.');
+            }else{
+                return redirect()->back()->with('error', 'Product Base Image not found.');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            Log::error("Error occurred while deleting product Base Image: " . $th->getMessage());
+            return redirect()->back()->with('error', 'Failed to delete product Base Image. Please try again.');
         }
     }
     

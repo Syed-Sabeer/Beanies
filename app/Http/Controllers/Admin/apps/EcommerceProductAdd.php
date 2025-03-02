@@ -18,11 +18,12 @@ class EcommerceProductAdd extends Controller
     {
         $colorData = ComponentProductColor::all();
         // $colorData = json_decode(file_get_contents(public_path('assetsCommon/api/color_api.json')), true);
-        return view('admin.content.apps.app-ecommerce-product-add', compact('colorData' ));
+        return view('admin.content.apps.app-ecommerce-product-add', compact('colorData'));
     }
 
     public function store(Request $request)
     {
+        // dd($request);
         try {
             // Log the incoming request data
             Log::info('Incoming request data:', $request->all());
@@ -39,8 +40,8 @@ class EcommerceProductAdd extends Controller
                 'pricing.*' => 'required|numeric',
                 'reseller_pricing.*' => 'required|numeric',
             ]);
-            
-    
+
+
             // Save the product
             $product = Product::create([
                 'title' => $request->title,
@@ -48,7 +49,7 @@ class EcommerceProductAdd extends Controller
                 'description' => $request->description,
                 'is_pompom' => $request->is_pompom,
             ]);
-            
+
 
             // Process and store base images
             if ($request->hasFile('base_images')) {
@@ -68,25 +69,24 @@ class EcommerceProductAdd extends Controller
             }
 
             // Process and store color images
-         // Process and store color images
-foreach ($request->color as $index => $colorId) {
-    Log::info("Processing color ID $colorId with images:");
-    if ($request->hasFile("images.$index")) {
-        foreach ($request->file("images.$index") as $colorImage) {
-            Log::info('Processing color image: ', [$colorImage->getClientOriginalName()]);
-            $colorImagePath = $colorImage->store('ProductImages/ColorVariations', 'public');
-            if ($colorImagePath) {
-                ProductColor::create([
-                    'product_id' => $product->id,
-                    'color_id' => $colorId, // Store the color ID here
-                    'image' => $colorImagePath,
-                ]);
-            } else {
-                return redirect()->back()->with('error', 'Color image upload failed.');
+            foreach ($request->color as $index => $colorId) {
+                Log::info("Processing color ID $colorId with images:");
+                if ($request->hasFile("images.$index")) {
+                    foreach ($request->file("images.$index") as $colorImage) {
+                        Log::info('Processing color image: ', [$colorImage->getClientOriginalName()]);
+                        $colorImagePath = $colorImage->store('ProductImages/ColorVariations', 'public');
+                        if ($colorImagePath) {
+                            ProductColor::create([
+                                'product_id' => $product->id,
+                                'color_id' => $colorId, // Store the color ID here
+                                'image' => $colorImagePath,
+                            ]);
+                        } else {
+                            return redirect()->back()->with('error', 'Color image upload failed.');
+                        }
+                    }
+                }
             }
-        }
-    }
-}
 
 
             // Save product pricing in separate rows
@@ -96,14 +96,14 @@ foreach ($request->color as $index => $colorId) {
                     'Price' => $request->pricing[$index],
                     'Reseller Price' => $request->reseller_pricing[$index],
                 ]);
-                
+
                 ProductPricing::create([
                     'product_id' => $product->id,
                     'quantity' => $quantity,
                     'pricing' => $request->pricing[$index],
                     'reseller_pricing' => $request->reseller_pricing[$index], // Fix the column name
                 ]);
-                
+
             }
 
             return redirect()->back()->with('success', 'Product added successfully!');
@@ -112,5 +112,5 @@ foreach ($request->color as $index => $colorId) {
             return redirect()->back()->with('error', 'Failed to add product. Please try again.');
         }
     }
-  
+
 }
