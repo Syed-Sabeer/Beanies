@@ -185,8 +185,10 @@ Log::info('Cart cookie received:', ['cartCookie' => $cartCookie]);
                             'patch_height' => $item['patchHeight'] ?? null,
                             'font_style' => $item['fontStyle'] ?? null,
                             'num_of_imprint' => $item['numOfImprint'] ?? null,
-                       'imprint_color' => json_encode(array_values(array_filter($item, fn($key) => str_starts_with($key, 'imprintColors'), ARRAY_FILTER_USE_KEY))),
 
+    'imprint_color' => isset($item['imprintColors']) && is_array($item['imprintColors']) 
+    ? json_encode($item['imprintColors']) 
+    : json_encode([]),
 
                             'leathercolor' => $item['leathercolor'] ?? null,
                         ]);
@@ -201,7 +203,10 @@ Log::info('Cart cookie received:', ['cartCookie' => $cartCookie]);
                             'patch_height' => $item['patchHeight'] ?? null,
                             'font_style' => $item['fontStyle'] ?? null,
                             'num_of_imprint' =>  $item['numOfImprint'] ?? null,
-'imprint_color' => is_array($item['imprintColors']) ? json_encode($item['imprintColors']) : ($item['imprintColors'] ?? "[]"),
+
+'imprint_color' => isset($item['imprintColors']) && is_array($item['imprintColors']) 
+    ? json_encode($item['imprintColors']) 
+    : json_encode([]),
 
 
 
