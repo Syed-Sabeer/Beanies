@@ -32,7 +32,7 @@ class TPSTaxPricingController extends Controller
             'taxno' => $request->taxno,
         ]);
     
-        return redirect()->route('TPStax_price.index')->with('success', 'Tax Percentage Added');
+        return redirect()->back()->with('success', 'Tax Percentage Added');
     }
 
     public function edit($id)
@@ -55,7 +55,7 @@ class TPSTaxPricingController extends Controller
             'taxno' => $request->taxno,
         ]);
     
-        return redirect()->route('TPStax_price.index')->with('success', 'Tax Percentage Updated');
+        return redirect()->back()->with('success', 'Tax Percentage Updated');
     }
 
     public function destroy($id)
@@ -63,6 +63,6 @@ class TPSTaxPricingController extends Controller
     $taxPercentage = TPSTaxPrice::findOrFail($id);
     $taxPercentage->delete();
 
-    return redirect()->route('TPStax_price.index')->with('success', 'Tax Percentage Deleted');
+    return redirect()->back()->with('success', 'Tax Percentage Deleted');
 }
 }

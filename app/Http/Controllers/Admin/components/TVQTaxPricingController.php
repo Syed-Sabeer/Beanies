@@ -32,7 +32,7 @@ class TVQTaxPricingController extends Controller
             'taxno' => $request->taxno,
         ]);
     
-        return redirect()->route('TVQtax_price.index')->with('success', 'Tax Percentage Added');
+        return redirect()->back()->with('success', 'Tax Percentage Added');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class TVQTaxPricingController extends Controller
             'taxno' => $request->taxno,
         ]);
     
-        return redirect()->route('TVQtax_price.index')->with('success', 'Tax Percentage Updated');
+        return redirect()->back()->with('success', 'Tax Percentage Updated');
     }
 
     public function destroy($id)
@@ -62,7 +62,7 @@ class TVQTaxPricingController extends Controller
     $taxPercentage = TVQTaxPrice::findOrFail($id);
     $taxPercentage->delete();
 
-    return redirect()->route('TVQtax_price.index')->with('success', 'Tax Percentage Deleted');
+    return redirect()->back()->with('success', 'Tax Percentage Deleted');
 }
 
 }

@@ -162,7 +162,7 @@ class DiscountCouponsController extends Controller
                 $printing->discountCoupons()->save($discountCoupon);
             }
 
-            return redirect()->route('content-discount-coupon-list')->with('success', 'Discount coupon updated successfully!');
+            return redirect()->back()->with('success', 'Discount coupon updated successfully!');
         } catch (Exception $e) {
             Log::error(['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Something went wrong! Please try again later.');
@@ -176,7 +176,7 @@ class DiscountCouponsController extends Controller
             $discountCoupon = DiscountCoupon::findOrFail($id);
             $discountCoupon->delete();
 
-            return redirect()->route('content-discount-coupon-list')->with('success', 'Discount coupon deleted successfully!');
+            return redirect()->back()->with('success', 'Discount coupon deleted successfully!');
         } catch (Exception $e) {
             Log::error(['error' => $e->getMessage()]);
             return redirect()->back()->with('error', 'Something went wrong! Please try again later.');

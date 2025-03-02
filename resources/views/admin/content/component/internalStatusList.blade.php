@@ -35,30 +35,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($statuses as $status)
-                    <tr>
-                      <td></td>
-                        <td>{{ $status->title }}</td>
-                        <td>{{ $status->description }}</td>
-                        <td>
-                            <a href="{{ route($prefix .'.order-internal-status.edit', $status->id) }}" class="btn btn-warning">Edit</a>
-                            
-                            @if ($status->deleted_at)
-                                <form action="{{ route($prefix .'.order-internal-status.restore', $status->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-success">Restore</button>
-                                </form>
-                            @else
-                                <form action="{{ route($prefix .'.order-internal-status.destroy', $status->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
+                @if(isset($statuses) && count($statuses) > 0)
+                    @foreach ($statuses as $status)
+                        <tr>
+                        <td></td>
+                            <td>{{ $status->title }}</td>
+                            <td>{{ $status->description }}</td>
+                            <td>
+                                <a href="{{ route($prefix .'.order-internal-status.edit', $status->id) }}" class="btn btn-warning">Edit</a>
+                                
+                                @if ($status->deleted_at)
+                                    <form action="{{ route($prefix .'.order-internal-status.restore', $status->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-success">Restore</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route($prefix .'.order-internal-status.destroy', $status->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

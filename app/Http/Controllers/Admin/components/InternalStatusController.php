@@ -35,7 +35,7 @@ class InternalStatusController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('InternalStatus.index')->with('success', 'Status created successfully.');
+        return redirect()->back()->with('success', 'Status created successfully.');
     }
 
     // Show edit form
@@ -59,7 +59,7 @@ class InternalStatusController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('order-internal-status.index')->with('success', 'Status updated successfully.');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     // Soft delete a status
@@ -68,7 +68,8 @@ class InternalStatusController extends Controller
         $status = InternalStatus::findOrFail($id);
         $status->delete();  // This will trigger soft delete
 
-        return view('admin.content.component.internalStatusList')->with('success', 'Status deleted successfully.');
+        return redirect()->back()->with('success', 'Status deleted successfully.');
+        // return view('admin.content.component.internalStatusList')->with('success', 'Status deleted successfully.');
     }
 
     // Restore a soft-deleted status (optional)
@@ -77,6 +78,6 @@ class InternalStatusController extends Controller
         $status = InternalStatus::withTrashed()->findOrFail($id);
         $status->restore();
 
-        return redirect()->route('order-internal-status.index')->with('success', 'Status restored successfully.');
+        return redirect()->back()->with('success', 'Status restored successfully.');
     }
 }
