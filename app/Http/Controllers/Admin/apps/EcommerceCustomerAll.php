@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin\Apps;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegisteredMail;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Admin\Apps\BaseAdminController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class EcommerceCustomerAll extends BaseAdminController
+class EcommerceCustomerAll extends Controller
 {
     public function index()
     {
