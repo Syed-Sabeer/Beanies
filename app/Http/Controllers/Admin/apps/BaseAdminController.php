@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 
+
 class BaseAdminController extends Controller
 {
     protected $prefix;

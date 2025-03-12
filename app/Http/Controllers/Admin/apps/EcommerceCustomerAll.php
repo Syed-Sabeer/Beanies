@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Apps;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegisteredMail;
+
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Admin\Apps\BaseAdminController;
 use App\Models\User;
