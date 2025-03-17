@@ -72,13 +72,16 @@ class EcommerceProductList extends Controller
     
             Log::info("Product deleted successfully.");
     
-            return response()->json(['success' => true]);
+            return redirect()->back()->with('success', 'Product deleted successfully');
+            // return response()->json(['success' => true]);
         } catch (\Illuminate\Database\QueryException $e) {
             Log::error("Database error: " . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Database error: ' . $e->getMessage()], 500);
+            return redirect()->back()->with('error', 'Something went wrong! Please try again later');
+            // return response()->json(['success' => false, 'message' => 'Database error: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
             Log::error("Error deleting product: " . $e->getMessage());
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return redirect()->back()->with('error', 'Something went wrong! Please try again later');
+            // return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 

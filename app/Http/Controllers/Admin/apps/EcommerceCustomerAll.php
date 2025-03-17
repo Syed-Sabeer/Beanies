@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Apps;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegisteredMail;
 use App\Http\Controllers\Controller;
@@ -40,8 +41,10 @@ class EcommerceCustomerAll extends Controller
 
     public function edit($id)
     {
+        // dd(Auth::user());
+        $authUser = Auth::user();
         $user = User::findOrFail($id);
-        return view("{$this->prefix}.content.apps.edit-customer", compact('user'));
+        return view("admin.content.apps.edit-customer", compact('user'));
     }
 
     public function update($id, Request $request)
@@ -54,11 +57,11 @@ class EcommerceCustomerAll extends Controller
             'email' => 'required|email',
             'password' => 'nullable|min:6',
             'is_reseller' => 'required|boolean',
-            'neq_number' => 'required',
+            'neq_number' => 'required_if:is_reseller,1',
             'status' => 'required|boolean',
             'country' => 'required',
         ]);
-
+        $authUser = Auth::user();
         $user = User::findOrFail($id);
         $data = $request->all();
         if (!$request->filled('password')) {
@@ -66,14 +69,15 @@ class EcommerceCustomerAll extends Controller
         }
         $user->update($data);
 
-        return redirect()->route("{$this->prefix}.app-ecommerce-customer-all")->with('success', 'User updated successfully');
+        return redirect()->route("{$authUser->role}.app-ecommerce-customer-all")->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route(route($this->prefix . '.app-ecommerce-customer-all', [], false));
+        return redirect()->back()->with('success', 'User deleted successfully');
+        // return redirect()->route(route($this->prefix . '.app-ecommerce-customer-all', [], false));
 
     }
 }

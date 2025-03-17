@@ -82,4 +82,34 @@
             });
         });
     });
+    // Delete confirmation with cancel message
+    document.querySelectorAll('.delete_confirm_form').forEach(button => {
+        button.addEventListener("click", function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, keep it"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Find the closest form and submit it
+                    this.closest("form").submit();
+                } else {
+                    Swal.fire({
+                        icon: "info",
+                        title: "Cancelled",
+                        text: "Your data is safe!",
+                        confirmButtonColor: "#3085d6"
+                    });
+                }
+            });
+        });
+
+    });
 </script>

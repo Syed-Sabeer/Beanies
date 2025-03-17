@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
             $table->integer('is_pompom');
             $table->integer('visibility')->default(1);
             $table->timestamps();
+            $table->softDeletes(); // This adds the 'deleted_at' column
         });
     }
 
