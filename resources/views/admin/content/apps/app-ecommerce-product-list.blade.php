@@ -49,65 +49,74 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                    <tr>
-                        <td>{{ $product->id }}</td>
-                        @php
-                        // Check if the product has base images
-                        $baseImages = $product->productBaseImages; // Retrieve the base images using the relationship
-                        @endphp
-                    
-                        @if ($baseImages->isNotEmpty())
-                        <td>
-                            <!-- Get the first base image, or use default if none exists -->
-                            <img src="{{ asset('storage/' . ($baseImages->first()->base_image ?? 'ProductImages/default.jpg')) }}" alt="Product Image" width="50">
-                        </td>
-                        @else
-                        <td>No Image Available</td>
-                        @endif
-                    
-                        <td>{{ $product->title }}</td>
-                        <td>
+                        <tr>
+                            <td>{{ $product->id }}</td>
                             @php
-                            // Ensure min_price and max_price are numeric and greater than zero
-                            $minPrice = isset($product->min_price) && is_numeric($product->min_price) && $product->min_price > 0
-                                        ? $product->min_price
-                                        : 0;
-                            $maxPrice = isset($product->max_price) && is_numeric($product->max_price) && $product->max_price > 0
-                                        ? $product->max_price
-                                        : 0;
+                                // Check if the product has base images
+                                $baseImages = $product->productBaseImages; // Retrieve the base images using the relationship
                             @endphp
-                        
-                            @if($minPrice > 0 && $maxPrice > 0)
-                                ${{ number_format($minPrice, 2) }} ~ ${{ number_format($maxPrice, 2) }}
-                            @else
-                                Not Available
-                            @endif
-                        </td>
-                        
-                    
-                        <td>
-                            <div class="w-25 d-flex justify-content-end">
-                                <label class="switch switch-primary switch-sm me-4 pe-2">
-                                    <input type="checkbox" class="switch-input" data-id="{{ $product->id }}" {{ $product->visibility == 1 ? 'checked' : '' }}>
-                                    <span class="switch-toggle-slider">
-                                        <span class="switch-on"></span>
-                                        <span class="switch-off"></span>
-                                    </span>
-                                </label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ route($prefix .'.app-ecommerce-product-edit', $product->id) }}" class="me-2"><i class="fa-solid fa-pen-to-square"></i></a>
 
-                    
-                            <a href="javascript:void(0);" class="me-2 delete-product" data-id="{{ $product->id }}">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                            <a data-bs-toggle="modal" data-bs-target="#onboardHorizontalImageModal"><i class="fa-solid fa-eye"></i></a>
-                        </td>
-                    </tr>
-                    
-                    
+                            @if ($baseImages->isNotEmpty())
+                                <td>
+                                    <!-- Get the first base image, or use default if none exists -->
+                                    <img src="{{ asset('storage/' . ($baseImages->first()->base_image ?? 'ProductImages/default.jpg')) }}"
+                                        alt="Product Image" width="50">
+                                </td>
+                            @else
+                                <td>No Image Available</td>
+                            @endif
+
+                            <td>{{ $product->title }}</td>
+                            <td>
+                                @php
+                                    // Ensure min_price and max_price are numeric and greater than zero
+                                    $minPrice =
+                                        isset($product->min_price) &&
+                                        is_numeric($product->min_price) &&
+                                        $product->min_price > 0
+                                            ? $product->min_price
+                                            : 0;
+                                    $maxPrice =
+                                        isset($product->max_price) &&
+                                        is_numeric($product->max_price) &&
+                                        $product->max_price > 0
+                                            ? $product->max_price
+                                            : 0;
+                                @endphp
+
+                                @if ($minPrice > 0 && $maxPrice > 0)
+                                    ${{ number_format($minPrice, 2) }} ~ ${{ number_format($maxPrice, 2) }}
+                                @else
+                                    Not Available
+                                @endif
+                            </td>
+
+
+                            <td>
+                                <div class="w-25 d-flex justify-content-end">
+                                    <label class="switch switch-primary switch-sm me-4 pe-2">
+                                        <input type="checkbox" class="switch-input" data-id="{{ $product->id }}"
+                                            {{ $product->visibility == 1 ? 'checked' : '' }}>
+                                        <span class="switch-toggle-slider">
+                                            <span class="switch-on"></span>
+                                            <span class="switch-off"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ route($prefix . '.app-ecommerce-product-edit', $product->id) }}"
+                                    class="me-2"><i class="fa-solid fa-pen-to-square"></i></a>
+
+
+                                <a href="{{ route($prefix . '.app-ecommerce-product-delete', $product->id) }}"
+                                    class="me-2 delete-product delete_confirm" data-id="{{ $product->id }}">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a>
+                                <a data-bs-toggle="modal" data-bs-target="#onboardHorizontalImageModal"><i
+                                        class="fa-solid fa-eye text-success"></i></a>
+                            </td>
+                        </tr>
                     @endforeach
 
                 </tbody>
@@ -116,53 +125,56 @@
     </div>
 
 
-    
 
-       <!-- Form with Image horizontal Modal -->
-       <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1" aria-hidden="true">
+
+    <!-- Form with Image horizontal Modal -->
+    <div class="modal-onboarding modal fade animate__animated" id="onboardHorizontalImageModal" tabindex="-1"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
-          <div class="modal-content text-center">
-            <div class="modal-header border-0">
+            <div class="modal-content text-center">
+                <div class="modal-header border-0">
 
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-              </button>
-            </div>
-
-            <div class="modal-body onboarding-horizontal p-0">
-
-              <div class="onboarding-content mb-0">
-                <h4 class="onboarding-title text-body">Product Basic Images</h4>
-                <div class="onboarding-info">
-                  <img src="{{ asset('storage/app/public/uploads/0x5Pm8HHpCgQY8xHs2cYlpKzozSfrkiNitKVX3jv.jpg') }}" alt="">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
                 </div>
 
-              </div>
+                <div class="modal-body onboarding-horizontal p-0">
 
-              <div class="onboarding-content mb-0">
-                <h4 class="onboarding-title text-body">Product Detail</h4>
-                <div class="onboarding-info">In this example you can see a form where you can request some additional
-                  information from the customer when they land on the app page.</div>
+                    <div class="onboarding-content mb-0">
+                        <h4 class="onboarding-title text-body">Product Basic Images</h4>
+                        <div class="onboarding-info">
+                            <img src="{{ asset('storage/app/public/uploads/0x5Pm8HHpCgQY8xHs2cYlpKzozSfrkiNitKVX3jv.jpg') }}"
+                                alt="">
+                        </div>
 
-              </div>
+                    </div>
 
+                    <div class="onboarding-content mb-0">
+                        <h4 class="onboarding-title text-body">Product Detail</h4>
+                        <div class="onboarding-info">In this example you can see a form where you can request some
+                            additional
+                            information from the customer when they land on the app page.</div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="onboarding-content mb-0">
+                    <h4 class="onboarding-title text-body">Product Detail</h4>
+                    <div class="onboarding-info">In this example you can see a form where you can request some additional
+                        information from the customer when they land on the app page.</div>
+
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-
-
-            <div class="onboarding-content mb-0">
-              <h4 class="onboarding-title text-body">Product Detail</h4>
-              <div class="onboarding-info">In this example you can see a form where you can request some additional
-                information from the customer when they land on the app page.</div>
-
-            </div>
-
-            <div class="modal-footer border-0">
-              <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <!--/ Form with Image horizontal Modal -->
+    </div>
+    <!--/ Form with Image horizontal Modal -->
 
 
 
@@ -178,7 +190,8 @@
                     const visibility = this.checked ? 1 : 0;
 
                     // Send AJAX request to update visibility
-                    fetch("{{ route($prefix .'.update.visibility', ':id') }}".replace(':id', productId), {
+                    fetch("{{ route($prefix . '.update.visibility', ':id') }}".replace(':id',
+                            productId), {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

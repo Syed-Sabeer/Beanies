@@ -1,13 +1,17 @@
 @extends('main.layouts.master')
 
-<title>{{ $product->productSEO->metatitle ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada'}}</title>
-<meta name="title" content="{{ $product->productSEO->metatitle ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada'}}">
-<meta name="description" content="{{ $product->productSEO->metadescription ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada, with unique designs. Get high-quality, stylish, and cozy Customize Embroidered Beanies for any occasion.'}}">
-<meta name="keywords" content="{{ $product->productSEO->metakeywords ?? 'customize beanies, embroidered beanies, Customize Embroidered Beanies in Montreal-Nord, Customize Embroidered Beanies in Canada'}}">
+<title>{{ $product->productSEO->metatitle ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada' }}</title>
+<meta name="title"
+    content="{{ $product->productSEO->metatitle ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada' }}">
+<meta name="description"
+    content="{{ $product->productSEO->metadescription ?? 'Customize Embroidered Beanies in Montreal-Nord, Canada, with unique designs. Get high-quality, stylish, and cozy Customize Embroidered Beanies for any occasion.' }}">
+<meta name="keywords"
+    content="{{ $product->productSEO->metakeywords ?? 'customize beanies, embroidered beanies, Customize Embroidered Beanies in Montreal-Nord, Customize Embroidered Beanies in Canada' }}">
 <link rel="canonical" href="https://monkeybeanies.com/products">
 
 @section('main-container')
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich|Allan|Allerta|Allerta+Stencil|Anton|Archivo+Black|Arvo|Atomic+Age|Audiowide|Bangers|Berkshire+Swash|Bitter|Black+Ops+One|Butcherman|Calligraffitti|Ceviche+One|Changa+One|Chewy|Comfortaa|Coming+Soon|Contrail+One|Courgette|Coustard|Crafty+Girls|Domine|Fjalla+One|Fontdiner+Swanky|Francois+One|Geostar+Fill|Gloria+Hallelujah|Graduate|Grand+Hotel|Griffy|Hanalei+Fill|Indie+Flower|Jockey+One|Kaushan+Script|Keania+One|La+Belle+Aurore|Leckerli+One|Lilita+One|Lily+Script+One|Lobster|Marck+Script|Merienda+One|Mountains+of+Christmas|Mr+Dafoe|Nosifer|Nunito|Orbitron|Pacifico|Passero+One|Pathway+Gothic+One|Permanent+Marker|Piedra|Pirata+One|Plaster|Playball|Press+Start+2P|Quantico|Racing+Sans+One|Rationale|Rock+Salt|Ruslan+Display|Sancreek|Shadows+Into+Light+Two|Shojumaru|Sigmar+One|Six+Caps|Slackey|Special+Elite|UnifrakturCook|UnifrakturMaguntia|Waiting+for+the+Sunrise|Yanone+Kaffeesatz">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Aldrich|Allan|Allerta|Allerta+Stencil|Anton|Archivo+Black|Arvo|Atomic+Age|Audiowide|Bangers|Berkshire+Swash|Bitter|Black+Ops+One|Butcherman|Calligraffitti|Ceviche+One|Changa+One|Chewy|Comfortaa|Coming+Soon|Contrail+One|Courgette|Coustard|Crafty+Girls|Domine|Fjalla+One|Fontdiner+Swanky|Francois+One|Geostar+Fill|Gloria+Hallelujah|Graduate|Grand+Hotel|Griffy|Hanalei+Fill|Indie+Flower|Jockey+One|Kaushan+Script|Keania+One|La+Belle+Aurore|Leckerli+One|Lilita+One|Lily+Script+One|Lobster|Marck+Script|Merienda+One|Mountains+of+Christmas|Mr+Dafoe|Nosifer|Nunito|Orbitron|Pacifico|Passero+One|Pathway+Gothic+One|Permanent+Marker|Piedra|Pirata+One|Plaster|Playball|Press+Start+2P|Quantico|Racing+Sans+One|Rationale|Rock+Salt|Ruslan+Display|Sancreek|Shadows+Into+Light+Two|Shojumaru|Sigmar+One|Six+Caps|Slackey|Special+Elite|UnifrakturCook|UnifrakturMaguntia|Waiting+for+the+Sunrise|Yanone+Kaffeesatz">
 
 
     @component('main.components.breadcrumb', [
@@ -66,17 +70,17 @@
                                         $user = Auth::user(); // Get the logged-in user
                                         $country = $user ? $user->country : (session('country') ?? 'USA'); // Check session as fallback
                                     @endphp --}}
-                                    
-                                    {{-- @if($country === 'CANADA')  --}}
-                                    @foreach ($prices as $price)
-                                    @php $roundedPrice = round($price, 2); @endphp
-                                    <td class="fw-medium text-align-center" data-price="{{ $roundedPrice }}"
-                                        id="pricing-{{ $roundedPrice }}">
-                                        ${{ number_format($roundedPrice, 2) }}
-                                    </td>
-                                @endforeach
-                                
-                                    {{-- @else
+
+                                        {{-- @if ($country === 'CANADA')  --}}
+                                        @foreach ($prices as $price)
+                                            @php $roundedPrice = round($price, 2); @endphp
+                                            <td class="fw-medium text-align-center" data-price="{{ $roundedPrice }}"
+                                                id="pricing-{{ $roundedPrice }}">
+                                                ${{ number_format($roundedPrice, 2) }}
+                                            </td>
+                                        @endforeach
+
+                                        {{-- @else
                                         @foreach ($USAprices as $price)
                                             <td class="fw-medium text-align-center" data-price="{{ $price }}"
                                                 id="pricing-{{ $price }}">
@@ -84,7 +88,7 @@
                                             </td>
                                         @endforeach
                                     @endif --}}
-                                    
+
 
                                     </tr>
                                 </tbody>
@@ -152,13 +156,13 @@
                                     <h2 class="h4 mb-0">Enter Quantity</h2>
                                 </div>
                                 <div class="price-details">
-                                    Total Qty: <span class="total-qty">0</span> | Price: 
+                                    Total Qty: <span class="total-qty">0</span> | Price:
                                     <x-currency-symbol-usd />
                                     <span id="total-price">0.00</span>
                                     <x-currency-symbol-cad />
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <input type="number" id="quantity-input" placeholder="Qty" class="form-control"
                                     min="0">
@@ -183,7 +187,7 @@
 
                                 <!-- Total quantity and price on the right -->
                                 <div class="price-details">
-                                    Total Qty: <span class="total-qty">0</span> | Price: 
+                                    Total Qty: <span class="total-qty">0</span> | Price:
                                     <x-currency-symbol-usd />
                                     <span id="total-price2">0.00</span>
                                     <x-currency-symbol-cad />
@@ -238,7 +242,7 @@
                                             <input type="radio" id="withoutpompom" name="pompom" value="0">
                                             <label for="withoutpompom">
                                                 <img src="{{ asset('assetsCommon/images/withoutPomPom.jpg') }}"
-                                                    alt="withoutpompom" class="pompomsize" > Without Pom
+                                                    alt="withoutpompom" class="pompomsize"> Without Pom
                                                 Pom
                                             </label>
                                         </div>
@@ -247,7 +251,7 @@
                                             <input type="radio" id="withpompom" name="pompom" value="1">
                                             <label for="withpompom">
                                                 <img src="{{ asset('assetsCommon/images/withPomPom.jpg') }}"
-                                                    alt="withpompom"  class="pompomsize"> With Pom Pom
+                                                    alt="withpompom" class="pompomsize"> With Pom Pom
                                                 <span style="color: red">$<span id="pompomvalue"></span> per unit </span>
                                             </label>
 
@@ -260,17 +264,16 @@
                                 <div class="section-header mt-4">
                                     Select Printing Option
                                 </div>
-                                
+
                                 <div class="printing-options">
                                     @if ($productPrintings->isNotEmpty())
                                         @foreach ($productPrintings as $printing)
-                                            <div class="option-card printing-option" 
-                                                data-id="{{ $printing->id }}"
+                                            <div class="option-card printing-option" data-id="{{ $printing->id }}"
                                                 data-title="{{ $printing->title }}"
                                                 data-quantities="{{ json_encode($printing->quantity) }}"
                                                 data-prices="{{ json_encode($printing->price) }}"
                                                 data-is-leather="{{ $printing->is_leather }}">
-                                                <img src="{{ asset('storage/' . $printing->image) }}" 
+                                                <img src="{{ asset('storage/' . $printing->image) }}"
                                                     alt="{{ $printing->title }}">
                                                 <h3>{{ $printing->title }}</h3>
                                             </div>
@@ -280,16 +283,17 @@
                                     @endif
                                 </div>
 
-                                
-                                <div id="printing-error" style="color: red; display: none;" class="mt-5 alert alert-danger text-center text-capitalize mb-4 fs-14">
-                                  The Minimum Quantity for Leather Patches is 50
+
+                                <div id="printing-error" style="color: red; display: none;"
+                                    class="mt-5 alert alert-danger text-center text-capitalize mb-4 fs-14">
+                                    The Minimum Quantity for Leather Patches is 50
                                 </div>
-                                
-                                
-                 
-                                
-                        
-                                
+
+
+
+
+
+
                                 <div class="container my-5" id="artwork-upload">
                                     <h2 class="text-center mb-4">Upload Your Artwork</h2>
 
@@ -361,25 +365,24 @@
 
 
                                     <script>
-                                       document.addEventListener("DOMContentLoaded", function() {
-    const printingOptions = document.querySelectorAll(".printing-option");
-    const leatherworkSection = document.getElementById("leatherwork");
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            const printingOptions = document.querySelectorAll(".printing-option");
+                                            const leatherworkSection = document.getElementById("leatherwork");
 
-    printingOptions.forEach(option => {
-        option.addEventListener("click", function() {
-            // Get the value of the data-is-leather attribute
-            const isLeather = this.getAttribute("data-is-leather");
+                                            printingOptions.forEach(option => {
+                                                option.addEventListener("click", function() {
+                                                    // Get the value of the data-is-leather attribute
+                                                    const isLeather = this.getAttribute("data-is-leather");
 
-            // Check if isLeather is 1 (true)
-            if (isLeather === "1") {
-                leatherworkSection.style.display = "block"; // Show leatherwork section
-            } else {
-                leatherworkSection.style.display = "none"; // Hide leatherwork section
-            }
-        });
-    });
-});
-
+                                                    // Check if isLeather is 1 (true)
+                                                    if (isLeather === "1") {
+                                                        leatherworkSection.style.display = "block"; // Show leatherwork section
+                                                    } else {
+                                                        leatherworkSection.style.display = "none"; // Hide leatherwork section
+                                                    }
+                                                });
+                                            });
+                                        });
                                     </script>
 
                                     <!-- Patch Dimensions -->
@@ -408,85 +411,129 @@
                                             <option style="font-family: Aldrich;" value="Aldrich">Aldrich</option>
                                             <option style="font-family: Allan;" value="Allan">Allan</option>
                                             <option style="font-family: Allerta;" value="Allerta">Allerta</option>
-                                            <option style="font-family: 'Allerta Stencil';" value="Allerta Stencil">Allerta Stencil</option>
+                                            <option style="font-family: 'Allerta Stencil';" value="Allerta Stencil">
+                                                Allerta Stencil</option>
                                             <option style="font-family: Anton;" value="Anton">Anton</option>
-                                            <option style="font-family: 'Archivo Black';" value="Archivo Black">Archivo Black</option>
+                                            <option style="font-family: 'Archivo Black';" value="Archivo Black">Archivo
+                                                Black</option>
                                             <option style="font-family: Arvo;" value="Arvo">Arvo</option>
-                                            <option style="font-family: 'Atomic Age';" value="Atomic Age">Atomic Age</option>
+                                            <option style="font-family: 'Atomic Age';" value="Atomic Age">Atomic Age
+                                            </option>
                                             <option style="font-family: Audiowide;" value="Audiowide">Audiowide</option>
                                             <option style="font-family: Bangers;" value="Bangers">Bangers</option>
-                                            <option style="font-family: 'Berkshire Swash';" value="Berkshire Swash">Berkshire Swash</option>
+                                            <option style="font-family: 'Berkshire Swash';" value="Berkshire Swash">
+                                                Berkshire Swash</option>
                                             <option style="font-family: Bitter;" value="Bitter">Bitter</option>
-                                            <option style="font-family: 'Black Ops One';" value="Black Ops One">Black Ops One</option>
-                                            <option style="font-family: Butcherman;" value="Butcherman">Butcherman</option>
-                                            <option style="font-family: Calligraffitti;" value="Calligraffitti">Calligraffitti</option>
-                                            <option style="font-family: 'Ceviche One';" value="Ceviche One">Ceviche One</option>
-                                            <option style="font-family: 'Changa One';" value="Changa One">Changa One</option>
+                                            <option style="font-family: 'Black Ops One';" value="Black Ops One">Black Ops
+                                                One</option>
+                                            <option style="font-family: Butcherman;" value="Butcherman">Butcherman
+                                            </option>
+                                            <option style="font-family: Calligraffitti;" value="Calligraffitti">
+                                                Calligraffitti</option>
+                                            <option style="font-family: 'Ceviche One';" value="Ceviche One">Ceviche One
+                                            </option>
+                                            <option style="font-family: 'Changa One';" value="Changa One">Changa One
+                                            </option>
                                             <option style="font-family: Chewy;" value="Chewy">Chewy</option>
                                             <option style="font-family: Comfortaa;" value="Comfortaa">Comfortaa</option>
-                                            <option style="font-family: 'Coming Soon';" value="Coming Soon">Coming Soon</option>
-                                            <option style="font-family: 'Contrail One';" value="Contrail One">Contrail One</option>
+                                            <option style="font-family: 'Coming Soon';" value="Coming Soon">Coming Soon
+                                            </option>
+                                            <option style="font-family: 'Contrail One';" value="Contrail One">Contrail One
+                                            </option>
                                             <option style="font-family: Courgette;" value="Courgette">Courgette</option>
                                             <option style="font-family: Coustard;" value="Coustard">Coustard</option>
-                                            <option style="font-family: 'Crafty Girls';" value="Crafty Girls">Crafty Girls</option>
+                                            <option style="font-family: 'Crafty Girls';" value="Crafty Girls">Crafty Girls
+                                            </option>
                                             <option style="font-family: Domine;" value="Domine">Domine</option>
-                                            <option style="font-family: 'Fjalla One';" value="Fjalla One">Fjalla One</option>
-                                            <option style="font-family: 'Fontdiner Swanky';" value="Fontdiner Swanky">Fontdiner Swanky</option>
-                                            <option style="font-family: 'Francois One';" value="Francois One">Francois One</option>
-                                            <option style="font-family: 'Geostar Fill';" value="Geostar Fill">Geostar Fill</option>
-                                            <option style="font-family: 'Gloria Hallelujah';" value="Gloria Hallelujah">Gloria Hallelujah</option>
+                                            <option style="font-family: 'Fjalla One';" value="Fjalla One">Fjalla One
+                                            </option>
+                                            <option style="font-family: 'Fontdiner Swanky';" value="Fontdiner Swanky">
+                                                Fontdiner Swanky</option>
+                                            <option style="font-family: 'Francois One';" value="Francois One">Francois One
+                                            </option>
+                                            <option style="font-family: 'Geostar Fill';" value="Geostar Fill">Geostar Fill
+                                            </option>
+                                            <option style="font-family: 'Gloria Hallelujah';" value="Gloria Hallelujah">
+                                                Gloria Hallelujah</option>
                                             <option style="font-family: Graduate;" value="Graduate">Graduate</option>
-                                            <option style="font-family: 'Grand Hotel';" value="Grand Hotel">Grand Hotel</option>
+                                            <option style="font-family: 'Grand Hotel';" value="Grand Hotel">Grand Hotel
+                                            </option>
                                             <option style="font-family: Griffy;" value="Griffy">Griffy</option>
-                                            <option style="font-family: 'Hanalei Fill';" value="Hanalei Fill">Hanalei Fill</option>
-                                            <option style="font-family: 'Indie Flower';" value="Indie Flower">Indie Flower</option>
-                                            <option style="font-family: 'Jockey One';" value="Jockey One">Jockey One</option>
-                                            <option style="font-family: 'Kaushan Script';" value="Kaushan Script">Kaushan Script</option>
-                                            <option style="font-family: 'Keania One';" value="Keania One">Keania One</option>
-                                            <option style="font-family: 'La Belle Aurore';" value="La Belle Aurore">La Belle Aurore</option>
-                                            <option style="font-family: 'Leckerli One';" value="Leckerli One">Leckerli One</option>
-                                            <option style="font-family: 'Lilita One';" value="Lilita One">Lilita One</option>
-                                            <option style="font-family: 'Lily Script One';" value="Lily Script One">Lily Script One</option>
+                                            <option style="font-family: 'Hanalei Fill';" value="Hanalei Fill">Hanalei Fill
+                                            </option>
+                                            <option style="font-family: 'Indie Flower';" value="Indie Flower">Indie Flower
+                                            </option>
+                                            <option style="font-family: 'Jockey One';" value="Jockey One">Jockey One
+                                            </option>
+                                            <option style="font-family: 'Kaushan Script';" value="Kaushan Script">Kaushan
+                                                Script</option>
+                                            <option style="font-family: 'Keania One';" value="Keania One">Keania One
+                                            </option>
+                                            <option style="font-family: 'La Belle Aurore';" value="La Belle Aurore">La
+                                                Belle Aurore</option>
+                                            <option style="font-family: 'Leckerli One';" value="Leckerli One">Leckerli One
+                                            </option>
+                                            <option style="font-family: 'Lilita One';" value="Lilita One">Lilita One
+                                            </option>
+                                            <option style="font-family: 'Lily Script One';" value="Lily Script One">Lily
+                                                Script One</option>
                                             <option style="font-family: Lobster;" value="Lobster">Lobster</option>
-                                            <option style="font-family: 'Marck Script';" value="Marck Script">Marck Script</option>
-                                            <option style="font-family: 'Merienda One';" value="Merienda One">Merienda One</option>
-                                            <option style="font-family: 'Mountains of Christmas';" value="Mountains of Christmas">Mountains of Christmas</option>
+                                            <option style="font-family: 'Marck Script';" value="Marck Script">Marck Script
+                                            </option>
+                                            <option style="font-family: 'Merienda One';" value="Merienda One">Merienda One
+                                            </option>
+                                            <option style="font-family: 'Mountains of Christmas';"
+                                                value="Mountains of Christmas">Mountains of Christmas</option>
                                             <option style="font-family: 'Mr Dafoe';" value="Mr Dafoe">Mr Dafoe</option>
                                             <option style="font-family: Nosifer;" value="Nosifer">Nosifer</option>
                                             <option style="font-family: Nunito;" value="Nunito">Nunito</option>
                                             <option style="font-family: Orbitron;" value="Orbitron">Orbitron</option>
                                             <option style="font-family: Pacifico;" value="Pacifico">Pacifico</option>
-                                            <option style="font-family: 'Passero One';" value="Passero One">Passero One</option>
-                                            <option style="font-family: 'Pathway Gothic One';" value="Pathway Gothic One">Pathway Gothic One</option>
-                                            <option style="font-family: 'Permanent Marker';" value="Permanent Marker">Permanent Marker</option>
+                                            <option style="font-family: 'Passero One';" value="Passero One">Passero One
+                                            </option>
+                                            <option style="font-family: 'Pathway Gothic One';" value="Pathway Gothic One">
+                                                Pathway Gothic One</option>
+                                            <option style="font-family: 'Permanent Marker';" value="Permanent Marker">
+                                                Permanent Marker</option>
                                             <option style="font-family: Piedra;" value="Piedra">Piedra</option>
-                                            <option style="font-family: 'Pirata One';" value="Pirata One">Pirata One</option>
+                                            <option style="font-family: 'Pirata One';" value="Pirata One">Pirata One
+                                            </option>
                                             <option style="font-family: Plaster;" value="Plaster">Plaster</option>
                                             <option style="font-family: Playball;" value="Playball">Playball</option>
-                                            <option style="font-family: 'Press Start 2P';" value="Press Start 2P">Press Start 2P</option>
+                                            <option style="font-family: 'Press Start 2P';" value="Press Start 2P">Press
+                                                Start 2P</option>
                                             <option style="font-family: Quantico;" value="Quantico">Quantico</option>
-                                            <option style="font-family: 'Racing Sans One';" value="Racing Sans One">Racing Sans One</option>
+                                            <option style="font-family: 'Racing Sans One';" value="Racing Sans One">Racing
+                                                Sans One</option>
                                             <option style="font-family: Rationale;" value="Rationale">Rationale</option>
                                             <option style="font-family: 'Rock Salt';" value="Rock Salt">Rock Salt</option>
-                                            <option style="font-family: 'Ruslan Display';" value="Ruslan Display">Ruslan Display</option>
+                                            <option style="font-family: 'Ruslan Display';" value="Ruslan Display">Ruslan
+                                                Display</option>
                                             <option style="font-family: Sancreek;" value="Sancreek">Sancreek</option>
-                                            <option style="font-family: 'Shadows Into Light Two';" value="Shadows Into Light Two">Shadows Into Light Two</option>
+                                            <option style="font-family: 'Shadows Into Light Two';"
+                                                value="Shadows Into Light Two">Shadows Into Light Two</option>
                                             <option style="font-family: Shojumaru;" value="Shojumaru">Shojumaru</option>
-                                            <option style="font-family: 'Sigmar One';" value="Sigmar One">Sigmar One</option>
+                                            <option style="font-family: 'Sigmar One';" value="Sigmar One">Sigmar One
+                                            </option>
                                             <option style="font-family: 'Six Caps';" value="Six Caps">Six Caps</option>
                                             <option style="font-family: Slackey;" value="Slackey">Slackey</option>
-                                            <option style="font-family: 'Special Elite';" value="Special Elite">Special Elite</option>
-                                            <option style="font-family: 'UnifrakturCook';" value="UnifrakturCook">UnifrakturCook</option>
-                                            <option style="font-family: 'UnifrakturMaguntia';" value="UnifrakturMaguntia">UnifrakturMaguntia</option>
-                                            <option style="font-family: 'Waiting for the Sunrise';" value="Waiting for the Sunrise">Waiting for the Sunrise</option>
-                                            <option style="font-family: 'Yanone Kaffeesatz';" value="Yanone Kaffeesatz">Yanone Kaffeesatz</option>
+                                            <option style="font-family: 'Special Elite';" value="Special Elite">Special
+                                                Elite</option>
+                                            <option style="font-family: 'UnifrakturCook';" value="UnifrakturCook">
+                                                UnifrakturCook</option>
+                                            <option style="font-family: 'UnifrakturMaguntia';" value="UnifrakturMaguntia">
+                                                UnifrakturMaguntia</option>
+                                            <option style="font-family: 'Waiting for the Sunrise';"
+                                                value="Waiting for the Sunrise">Waiting for the Sunrise</option>
+                                            <option style="font-family: 'Yanone Kaffeesatz';" value="Yanone Kaffeesatz">
+                                                Yanone Kaffeesatz</option>
                                         </select>
                                     </div>
-                                    
 
-                                    
 
-                                
+
+
+
                                     <!-- Imprint Colors -->
                                     <div class="mb-3 mt-3">
                                         <label for="imprintColors" class="form-label fw-bold">Select Number Of Imprint
@@ -514,28 +561,28 @@
                                             const addToCartButton = document.getElementById("add-to-cart-button");
                                             const imprintColors = parseInt(document.getElementById("imprintColors").value);
                                             let isValidImprintColors = true;
-                                    
+
                                             if (imprintColors !== 0) {
                                                 for (let i = 1; i <= imprintColors; i++) {
                                                     const colorInput = document.getElementById(`color${i}`);
                                                     const colorCode = colorInput?.value.trim() || "";
-                                                    const isValidColorCode = /^\d{4}$/.test(colorCode);  // Must be exactly 4 digits
+                                                    const isValidColorCode = /^\d{4}$/.test(colorCode); // Must be exactly 4 digits
                                                     isValidImprintColors = isValidImprintColors && isValidColorCode;
                                                     document.getElementById(`colorError${i}`).style.display = isValidColorCode ? "none" : "block";
                                                 }
                                             }
-                                    
-                                            addToCartButton.disabled = !isValidImprintColors;  // Example logic for disabling button
+
+                                            addToCartButton.disabled = !isValidImprintColors; // Example logic for disabling button
                                         }
-                                    
+
                                         // Rest of your code
                                         const imprintColors = document.getElementById('imprintColors');
                                         const additionalDropdowns = document.getElementById('additionalDropdowns');
-                                    
-                                        imprintColors.addEventListener('change', function () {
+
+                                        imprintColors.addEventListener('change', function() {
                                             const numColors = parseInt(imprintColors.value);
                                             additionalDropdowns.innerHTML = '';
-                                    
+
                                             if (numColors !== 0) {
                                                 for (let i = 1; i <= numColors; i++) {
                                                     const newSelect = document.createElement('div');
@@ -547,24 +594,24 @@
                                                         <p id="colorError${i}" class="text-danger" style="display:none; font-size: 0.9rem;">Color code must be exactly 4 digits.</p>
                                                     `;
                                                     additionalDropdowns.appendChild(newSelect);
-                                    
+
                                                     const colorInput = document.getElementById(`color${i}`);
                                                     colorInput.addEventListener('input', updateAddToCartButtonState);
                                                 }
                                             }
-                                    
+
                                             updateAddToCartButtonState();
                                         });
-                                    
+
                                         function validateColorCode(input, index) {
                                             const colorCode = input.value.trim();
                                             const isValidColorCode = /^\d{4}$/.test(colorCode);
                                             document.getElementById(`colorError${index}`).style.display = isValidColorCode ? 'none' : 'block';
                                         }
-                                    
+
                                         updateAddToCartButtonState();
                                     </script>
-                                    
+
                                 </div>
 
 
@@ -583,9 +630,9 @@
                                     </div>
                                     <h2 class="h4 mb-0">Shipping</h2>
                                 </div>
-                                
+
                                 <div class="price-details">
-                                    Total Qty: <span class="total-qty"></span> | Price: 
+                                    Total Qty: <span class="total-qty"></span> | Price:
                                     <x-currency-symbol-usd />
                                     <span id="total-price3">168.12</span>
                                     <x-currency-symbol-cad />
@@ -620,36 +667,36 @@
                                 </ul>
                             </div>
                             <div id="viewBundleBox" class="option-box" style="display: none;">
-                                    <ul class="dselects">
-                                       
-                                                <li class="shippingCharging">
-                                                    <span class="check"><i class="fa-solid fa-truck"></i></span>
-                                                    {{-- <div class="delivery_date w3_bg">
+                                <ul class="dselects">
+
+                                    <li class="shippingCharging">
+                                        <span class="check"><i class="fa-solid fa-truck"></i></span>
+                                        {{-- <div class="delivery_date w3_bg">
                                                          
                                                         </div> --}}
-                                                    
-<div class="delivery_price w3_bg">
-    Price:
-    <x-currency-symbol-usd />
-    <span id="total-price3span">0.00</span>
-    <x-currency-symbol-cad />
-</div>
-                                                </li>
 
-                                                <li class="shippingCharging" style="max-width: 190px">
-                                                    <span class="check"><i class="fa-solid fa-truck"></i></span>
-                                                    <div class="delivery_price w3_bg">
-                                                        <span class="delivery_price_number "
-                                                            >For Orders Over 500$</span>
-                                                    </div>
-                                        
-                                                    <div class="delivery_price w3_bg text-danger" style="font-weight:700">FREE SHIPPING
+                                        <div class="delivery_price w3_bg">
+                                            Price:
+                                            <x-currency-symbol-usd />
+                                            <span id="total-price3span">0.00</span>
+                                            <x-currency-symbol-cad />
+                                        </div>
+                                    </li>
 
-                                                    </div>
-                                                </li>
-                                            
-                                    </ul>
-                                
+                                    <li class="shippingCharging" style="max-width: 190px">
+                                        <span class="check"><i class="fa-solid fa-truck"></i></span>
+                                        <div class="delivery_price w3_bg">
+                                            <span class="delivery_price_number ">For Orders Over 500$</span>
+                                        </div>
+
+                                        <div class="delivery_price w3_bg text-danger" style="font-weight:700">FREE
+                                            SHIPPING
+
+                                        </div>
+                                    </li>
+
+                                </ul>
+
 
                             </div>
 
@@ -716,7 +763,7 @@
 
             const pomPomPrice = @json($pomPomPrice); // Fetch converted pom-pom price from backend
             document.getElementById("pompomvalue").innerText = pomPomPrice.toFixed(2);
-            
+
 
             const quantitiesDelivery = @json($quantitiesdelivery).map(Number);
             const pricesDelivery = @json($pricesDelivery).map(Number);
@@ -733,7 +780,8 @@
                     console.log("Selected Printing ID:", selectedPrintingId);
 
                     try {
-                        selectedPrintingQuantities = JSON.parse(this.dataset.quantities).map(Number);
+                        selectedPrintingQuantities = JSON.parse(this.dataset.quantities).map(
+                        Number);
                         pricesForSelectedPrinting = JSON.parse(this.dataset.prices).map(Number);
                         updatePrintingPriceAndTotal();
                     } catch (error) {
@@ -779,39 +827,42 @@
 
             // Update printing price and total price
             function updatePrintingPriceAndTotal() {
-    const enteredQty = parseInt(quantityInput.value) || 0;
-    totalQtyElements.forEach(element => {
-        element.textContent = enteredQty;
-    });
+                const enteredQty = parseInt(quantityInput.value) || 0;
+                totalQtyElements.forEach(element => {
+                    element.textContent = enteredQty;
+                });
 
-    selectedPrintingPrice = calculatePrice(enteredQty, selectedPrintingQuantities, pricesForSelectedPrinting);
+                selectedPrintingPrice = calculatePrice(enteredQty, selectedPrintingQuantities,
+                    pricesForSelectedPrinting);
 
-    // Ensure a printing option is selected
-    const activePrintingOption = document.querySelector(".printing-option.active");
-    const selectedPrintingId = activePrintingOption ? parseInt(activePrintingOption.getAttribute("data-id")) : null;
+                // Ensure a printing option is selected
+                const activePrintingOption = document.querySelector(".printing-option.active");
+                const selectedPrintingId = activePrintingOption ? parseInt(activePrintingOption.getAttribute(
+                    "data-id")) : null;
 
-    let isValidQuantity = false;
-    for (let i = 0; i < selectedPrintingQuantities.length; i++) {
-        if (enteredQty >= selectedPrintingQuantities[i]) {
-            isValidQuantity = true;
-            break;
-        }
-    }
+                let isValidQuantity = false;
+                for (let i = 0; i < selectedPrintingQuantities.length; i++) {
+                    if (enteredQty >= selectedPrintingQuantities[i]) {
+                        isValidQuantity = true;
+                        break;
+                    }
+                }
 
-if (selectedPrintingId !== null && (!isValidQuantity || (selectedPrintingPrice === 0 && selectedPrintingId > 1))) {
-    console.log("Selected Printing ID:", selectedPrintingId);
-    document.getElementById("printing-error").style.display = "block";
-} else {
-    document.getElementById("printing-error").style.display = "none";
-}
+                if (selectedPrintingId !== null && (!isValidQuantity || (selectedPrintingPrice === 0 &&
+                        selectedPrintingId > 1))) {
+                    console.log("Selected Printing ID:", selectedPrintingId);
+                    document.getElementById("printing-error").style.display = "block";
+                } else {
+                    document.getElementById("printing-error").style.display = "none";
+                }
 
-    calculateTotalPrice();
-}
+                calculateTotalPrice();
+            }
 
-// Ensure error message disappears when quantity is corrected
-quantityInput.addEventListener("input", function () {
-    document.getElementById("printing-error").style.display = "none";
-});
+            // Ensure error message disappears when quantity is corrected
+            quantityInput.addEventListener("input", function() {
+                document.getElementById("printing-error").style.display = "none";
+            });
 
             // Update total price based on quantity and selected printing option
             function calculateTotalPrice() {
@@ -819,15 +870,15 @@ quantityInput.addEventListener("input", function () {
                 let calculatedPrice = calculatePrice(enteredQty, quantities, prices);
 
                 const isWithPompom = document.querySelector('input[name="pompom"]:checked')?.value === "1";
-const pompomCustomizationPrice = isWithPompom ? enteredQty * pomPomPrice : 0;
+                const pompomCustomizationPrice = isWithPompom ? enteredQty * pomPomPrice : 0;
 
 
-          
-    const total = calculatedPrice * enteredQty;
-    const totalCustomization = selectedPrintingPrice * enteredQty + pompomCustomizationPrice;
 
-    console.log("Pom Pom Price per unit:", pomPomPrice);
-    console.log("Pom Pom Total:", pompomCustomizationPrice);
+                const total = calculatedPrice * enteredQty;
+                const totalCustomization = selectedPrintingPrice * enteredQty + pompomCustomizationPrice;
+
+                console.log("Pom Pom Price per unit:", pomPomPrice);
+                console.log("Pom Pom Total:", pompomCustomizationPrice);
                 console.log("Quantity:", enteredQty);
                 console.log("Printing ID:", selectedPrintingQuantities);
                 console.log("Printing Price:", selectedPrintingPrice);
@@ -844,68 +895,74 @@ const pompomCustomizationPrice = isWithPompom ? enteredQty * pomPomPrice : 0;
                 }
 
                 document.querySelectorAll('[id^="pricing-"]').forEach(function(priceElement) {
-    const priceValue = parseFloat(priceElement.getAttribute('data-price'));
-    const roundedPrice = parseFloat(priceValue.toFixed(2));
-    const roundedCalculatedPrice = parseFloat(calculatedPrice.toFixed(2));
+                    const priceValue = parseFloat(priceElement.getAttribute('data-price'));
+                    const roundedPrice = parseFloat(priceValue.toFixed(2));
+                    const roundedCalculatedPrice = parseFloat(calculatedPrice.toFixed(2));
 
-    console.log("Checking:", { priceValue, roundedPrice, calculatedPrice, roundedCalculatedPrice });
+                    console.log("Checking:", {
+                        priceValue,
+                        roundedPrice,
+                        calculatedPrice,
+                        roundedCalculatedPrice
+                    });
 
-    if (roundedPrice === roundedCalculatedPrice) {
-        priceElement.style.backgroundColor = "#F7B708";
-        priceElement.style.color = "#fff";
-    } else {
-        priceElement.style.backgroundColor = "";
-        priceElement.style.color = "black";
-    }
-});
+                    if (roundedPrice === roundedCalculatedPrice) {
+                        priceElement.style.backgroundColor = "#F7B708";
+                        priceElement.style.color = "#fff";
+                    } else {
+                        priceElement.style.backgroundColor = "";
+                        priceElement.style.color = "black";
+                    }
+                });
 
             }
 
             // Update delivery price and total cost for "View Shipping Bundle"
-        // Update delivery price and total cost for "View Shipping Bundle"
-function updateDeliveryPriceAndTotal() {
-    const enteredQty = parseInt(quantityInput.value) || 0;
-    const productPrice = calculatePrice(enteredQty, quantities, prices);
-    const printingPrice = selectedPrintingPrice * enteredQty;
-    const isWithPompom = document.querySelector('input[name="pompom"]:checked')?.value === "1";
-    const pompomPrice = isWithPompom ? enteredQty * 2 : 0;
+            // Update delivery price and total cost for "View Shipping Bundle"
+            function updateDeliveryPriceAndTotal() {
+                const enteredQty = parseInt(quantityInput.value) || 0;
+                const productPrice = calculatePrice(enteredQty, quantities, prices);
+                const printingPrice = selectedPrintingPrice * enteredQty;
+                const isWithPompom = document.querySelector('input[name="pompom"]:checked')?.value === "1";
+                const pompomPrice = isWithPompom ? enteredQty * 2 : 0;
 
-    // Calculate total price
-    const total = (productPrice * enteredQty) + printingPrice + pompomPrice;
+                // Calculate total price
+                const total = (productPrice * enteredQty) + printingPrice + pompomPrice;
 
-    // Determine the selected shipping option
-    const selectedOption = document.querySelector('input[name="shippingOption"]:checked')?.value;
+                // Determine the selected shipping option
+                const selectedOption = document.querySelector('input[name="shippingOption"]:checked')?.value;
 
-    let deliveryPrice = 0;
-    if (selectedOption === "viewBundle") {
-        deliveryPrice = total > 500 ? 0 : fixedDeliveryPrice; // Use the dynamic fixedDeliveryPrice
-    }
+                let deliveryPrice = 0;
+                if (selectedOption === "viewBundle") {
+                    deliveryPrice = total > 500 ? 0 : fixedDeliveryPrice; // Use the dynamic fixedDeliveryPrice
+                }
 
-    // Round delivery price to ensure consistency
-    deliveryPrice = parseFloat(deliveryPrice.toFixed(2));
-    
-    // Update the delivery price display
-    totalPriceDelivery.textContent = deliveryPrice.toFixed(2);
-    totalPriceDeliverySpan.textContent = deliveryPrice.toFixed(2);
+                // Round delivery price to ensure consistency
+                deliveryPrice = parseFloat(deliveryPrice.toFixed(2));
 
-    console.log("Calculated Delivery Price:", deliveryPrice);
+                // Update the delivery price display
+                totalPriceDelivery.textContent = deliveryPrice.toFixed(2);
+                totalPriceDeliverySpan.textContent = deliveryPrice.toFixed(2);
 
-    // Update the background color for the selected shipping option
-    document.querySelectorAll(".shippingCharging").forEach((shippingElement) => {
-        const priceText = shippingElement.querySelector(".delivery_price")?.textContent.match(/[\d.]+/);
-        const priceValue = priceText ? parseFloat(priceText[0]) : null;
+                console.log("Calculated Delivery Price:", deliveryPrice);
 
-        console.log("Extracted Price from UI:", priceValue);
+                // Update the background color for the selected shipping option
+                document.querySelectorAll(".shippingCharging").forEach((shippingElement) => {
+                    const priceText = shippingElement.querySelector(".delivery_price")?.textContent.match(
+                        /[\d.]+/);
+                    const priceValue = priceText ? parseFloat(priceText[0]) : null;
 
-        if (priceValue !== null && priceValue === deliveryPrice) {
-            shippingElement.style.backgroundColor = "#F7B708";
-            shippingElement.style.color = "#fff";
-        } else {
-            shippingElement.style.backgroundColor = "";
-            shippingElement.style.color = "";
-        }
-    });
-}
+                    console.log("Extracted Price from UI:", priceValue);
+
+                    if (priceValue !== null && priceValue === deliveryPrice) {
+                        shippingElement.style.backgroundColor = "#F7B708";
+                        shippingElement.style.color = "#fff";
+                    } else {
+                        shippingElement.style.backgroundColor = "";
+                        shippingElement.style.color = "";
+                    }
+                });
+            }
             // Toggle between "Pick Yourself" and "View Shipping Bundle"
             function toggleOptions() {
                 const selectedOption = document.querySelector('input[name="shippingOption"]:checked').value;
@@ -973,261 +1030,277 @@ function updateDeliveryPriceAndTotal() {
                     element.textContent = quantityInput.value;
                 });
             });
-            let printingId;  // Declare printingId outside the blocks
+            let printingId; // Declare printingId outside the blocks
             function updateAddToCartButtonState() {
-    const addToCartButton = document.getElementById("add-to-cart-button");
-    
-    // Check if quantity is valid
-    const quantity = parseInt(quantityInput.value) || 0;
-    const minQty = Math.min(...quantities);
-    const isValidQuantity = quantity >= minQty;
+                const addToCartButton = document.getElementById("add-to-cart-button");
 
-    // Check if a beanie color is selected
-    const colorId = beanieColorSelect.value;
-    const isColorSelected = colorId !== "";
+                // Check if quantity is valid
+                const quantity = parseInt(quantityInput.value) || 0;
+                const minQty = Math.min(...quantities);
+                const isValidQuantity = quantity >= minQty;
 
-    // Check if a beanie type is selected
-    const beanieTypeSelected = document.querySelector('input[name="beanie"]:checked') !== null;
+                // Check if a beanie color is selected
+                const colorId = beanieColorSelect.value;
+                const isColorSelected = colorId !== "";
 
-    // Check if a pom-pom option is selected
-    const pompomSelected = document.querySelector('input[name="pompom"]:checked') !== null;
+                // Check if a beanie type is selected
+                const beanieTypeSelected = document.querySelector('input[name="beanie"]:checked') !== null;
 
-    // Check if a printing option is selected
-    const printingOptionSelected = document.querySelector(".printing-option.active") !== null;
+                // Check if a pom-pom option is selected
+                const pompomSelected = document.querySelector('input[name="pompom"]:checked') !== null;
 
-    // Check if a shipping option is selected
-    const shippingOptionSelected = document.querySelector('input[name="shippingOption"]:checked') !== null;
+                // Check if a printing option is selected
+                const printingOptionSelected = document.querySelector(".printing-option.active") !== null;
 
-    // Check if artwork is required and validate based on artwork type
-    const artworkRequired = artworkSelection.style.display !== "none";
-    const artworkType = document.getElementById("artworkType").value;
-    const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;
-    const artworkText = document.getElementById("messageInput")?.value.trim() || "";
-    let isArtworkValid = true;
+                // Check if a shipping option is selected
+                const shippingOptionSelected = document.querySelector('input[name="shippingOption"]:checked') !==
+                    null;
 
-    if (artworkRequired) {
-        if (artworkType === "1") {  // "Upload my Artwork"
-            isArtworkValid = !!artworkDataImage;
-        } else if (artworkType === "2") {  // "Enter Your Message"
-            isArtworkValid = artworkText !== "";
-        }
-    }
+                // Check if artwork is required and validate based on artwork type
+                const artworkRequired = artworkSelection.style.display !== "none";
+                const artworkType = document.getElementById("artworkType").value;
+                const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;
+                const artworkText = document.getElementById("messageInput")?.value.trim() || "";
+                let isArtworkValid = true;
 
-    // Validate Patch Length and Height only if artwork is required
-    let isValidPatchLength = true;
-    let isValidPatchHeight = true;
-    let isFontStyleSelected = true;
-    let isValidImprintColors = true;
+                if (artworkRequired) {
+                    if (artworkType === "1") { // "Upload my Artwork"
+                        isArtworkValid = !!artworkDataImage;
+                    } else if (artworkType === "2") { // "Enter Your Message"
+                        isArtworkValid = artworkText !== "";
+                    }
+                }
 
-    if (artworkRequired) {
-        // Validate Patch Length
-        const patchLength = parseFloat(document.getElementById("patchLength").value);
-        isValidPatchLength = patchLength >= 1 && patchLength <= 4;
-        document.getElementById("patchLengthError").style.display = isValidPatchLength ? "none" : "block";
+                // Validate Patch Length and Height only if artwork is required
+                let isValidPatchLength = true;
+                let isValidPatchHeight = true;
+                let isFontStyleSelected = true;
+                let isValidImprintColors = true;
 
-        // Validate Patch Height
-        const patchHeight = parseFloat(document.getElementById("patchHeight").value);
-        isValidPatchHeight = patchHeight <= 2.5;
-        document.getElementById("patchHeightError").style.display = isValidPatchHeight ? "none" : "block";
+                if (artworkRequired) {
+                    // Validate Patch Length
+                    const patchLength = parseFloat(document.getElementById("patchLength").value);
+                    isValidPatchLength = patchLength >= 1 && patchLength <= 4;
+                    document.getElementById("patchLengthError").style.display = isValidPatchLength ? "none" :
+                        "block";
 
-        // Validate Font Style selection
-        const fontStyle = document.getElementById("fontStyle").value;
-        isFontStyleSelected = fontStyle !== "";
+                    // Validate Patch Height
+                    const patchHeight = parseFloat(document.getElementById("patchHeight").value);
+                    isValidPatchHeight = patchHeight <= 2.5;
+                    document.getElementById("patchHeightError").style.display = isValidPatchHeight ? "none" :
+                        "block";
 
-        // Validate Imprint Colors and Color Codes
-        const imprintColors = parseInt(document.getElementById("imprintColors").value);
-        if (imprintColors !== 0) {
-            for (let i = 1; i <= imprintColors; i++) {
-                const colorInput = document.getElementById(`color${i}`);
-                const colorCode = colorInput?.value.trim() || "";
-                const isValidColorCode = /^\d{4}$/.test(colorCode);  // Must be exactly 4 digits
-                isValidImprintColors = isValidImprintColors && isValidColorCode;
-                document.getElementById(`colorError${i}`).style.display = isValidColorCode ? "none" : "block";
+                    // Validate Font Style selection
+                    const fontStyle = document.getElementById("fontStyle").value;
+                    isFontStyleSelected = fontStyle !== "";
+
+                    // Validate Imprint Colors and Color Codes
+                    const imprintColors = parseInt(document.getElementById("imprintColors").value);
+                    if (imprintColors !== 0) {
+                        for (let i = 1; i <= imprintColors; i++) {
+                            const colorInput = document.getElementById(`color${i}`);
+                            const colorCode = colorInput?.value.trim() || "";
+                            const isValidColorCode = /^\d{4}$/.test(colorCode); // Must be exactly 4 digits
+                            isValidImprintColors = isValidImprintColors && isValidColorCode;
+                            document.getElementById(`colorError${i}`).style.display = isValidColorCode ? "none" :
+                                "block";
+                        }
+                    }
+                }
+
+                // Final check to enable or disable the button
+                const allValid = isValidQuantity && isColorSelected && beanieTypeSelected && pompomSelected &&
+                    printingOptionSelected && shippingOptionSelected && isArtworkValid && isValidPatchLength &&
+                    isValidPatchHeight && isFontStyleSelected && isValidImprintColors;
+
+                addToCartButton.disabled = !allValid;
             }
-        }
-    }
 
-    // Final check to enable or disable the button
-    const allValid = isValidQuantity && isColorSelected && beanieTypeSelected && pompomSelected && printingOptionSelected && shippingOptionSelected && isArtworkValid && isValidPatchLength && isValidPatchHeight && isFontStyleSelected && isValidImprintColors;
+            // Add event listeners to update button state on input changes
+            quantityInput.addEventListener("input", updateAddToCartButtonState);
+            beanieColorSelect.addEventListener("change", updateAddToCartButtonState);
+            beanieOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
+            pompomOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
+            printingOptions.forEach(option => option.addEventListener("click", updateAddToCartButtonState));
+            shippingOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
+            document.getElementById("artworkType")?.addEventListener("change", updateAddToCartButtonState);
+            document.getElementById("messageInput")?.addEventListener("input", updateAddToCartButtonState);
+            document.getElementById("fileUpload")?.addEventListener("change", updateAddToCartButtonState);
+            document.getElementById("patchLength")?.addEventListener("input", updateAddToCartButtonState);
+            document.getElementById("patchHeight")?.addEventListener("input", updateAddToCartButtonState);
+            document.getElementById("fontStyle")?.addEventListener("change", updateAddToCartButtonState);
+            document.getElementById("imprintColors")?.addEventListener("change", updateAddToCartButtonState);
 
-    addToCartButton.disabled = !allValid;
-}
-
-// Add event listeners to update button state on input changes
-quantityInput.addEventListener("input", updateAddToCartButtonState);
-beanieColorSelect.addEventListener("change", updateAddToCartButtonState);
-beanieOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
-pompomOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
-printingOptions.forEach(option => option.addEventListener("click", updateAddToCartButtonState));
-shippingOptions.forEach(option => option.addEventListener("change", updateAddToCartButtonState));
-document.getElementById("artworkType")?.addEventListener("change", updateAddToCartButtonState);
-document.getElementById("messageInput")?.addEventListener("input", updateAddToCartButtonState);
-document.getElementById("fileUpload")?.addEventListener("change", updateAddToCartButtonState);
-document.getElementById("patchLength")?.addEventListener("input", updateAddToCartButtonState);
-document.getElementById("patchHeight")?.addEventListener("input", updateAddToCartButtonState);
-document.getElementById("fontStyle")?.addEventListener("change", updateAddToCartButtonState);
-document.getElementById("imprintColors")?.addEventListener("change", updateAddToCartButtonState);
-
-updateAddToCartButtonState();
+            updateAddToCartButtonState();
 
 
-document.getElementById("add-to-cart-button").addEventListener("click", function () {
-    const button = this;
-    const originalText = button.textContent;
+            document.getElementById("add-to-cart-button").addEventListener("click", function() {
+                const button = this;
+                const originalText = button.textContent;
 
-    // Show loading state
-    button.disabled = true;
-    button.textContent = "Processing...  ";
-    button.classList.add("loading"); // Optional: Add a loading class for CSS styling
+                // Show loading state
+                button.disabled = true;
+                button.textContent = "Processing...  ";
+                button.classList.add("loading"); // Optional: Add a loading class for CSS styling
 
-    const isAuthenticated = "{{ Auth::check() }}" === "1"; // Ensure proper boolean conversion
+                const isAuthenticated = "{{ Auth::check() }}" === "1"; // Ensure proper boolean conversion
 
-    const quantity = parseInt(quantityInput.value) || 0;
-    const colorId = document.getElementById("beanie-color").value;
-    const beanieType = document.querySelector('input[name="beanie"]:checked')?.value || null;
-    const PomPomOption = document.querySelector('input[name="pompom"]:checked')?.value || 0;
-    const pompomPrice = PomPomOption === "1" ? pomPomPrice : 0;
-    const printingPrice = selectedPrintingPrice;
-    
-    let printingId = printingPrice === 0 ? 1 : parseInt(document.querySelector(".printing-option.active")?.getAttribute("data-id")) || null;
-    const productPrice = calculatePrice(quantity, quantities, prices);
-    const selectedOption = document.querySelector('input[name="shippingOption"]:checked')?.value;
-    const total = (productPrice * quantity) + (printingPrice * quantity) + pompomPrice;
+                const quantity = parseInt(quantityInput.value) || 0;
+                const colorId = document.getElementById("beanie-color").value;
+                const beanieType = document.querySelector('input[name="beanie"]:checked')?.value || null;
+                const PomPomOption = document.querySelector('input[name="pompom"]:checked')?.value || 0;
+                const pompomPrice = PomPomOption === "1" ? pomPomPrice : 0;
+                const printingPrice = selectedPrintingPrice;
 
-    let deliveryPrice = (selectedOption === "pickYourself") ? 0 : (total > 500 ? 0 : fixedDeliveryPrice);
+                let printingId = printingPrice === 0 ? 1 : parseInt(document.querySelector(
+                    ".printing-option.active")?.getAttribute("data-id")) || null;
+                const productPrice = calculatePrice(quantity, quantities, prices);
+                const selectedOption = document.querySelector('input[name="shippingOption"]:checked')
+                ?.value;
+                const total = (productPrice * quantity) + (printingPrice * quantity) + pompomPrice;
 
-    const formData = new FormData();
-    formData.append("productId", productId);
-    formData.append("userId", userId);
-    formData.append("colorId", colorId);
-    formData.append("quantity", quantity);
-    formData.append("beanieType", beanieType);
-    formData.append("PomPomOption", PomPomOption);
-    formData.append("printingId", printingId);
-    formData.append("printingPrice", printingPrice);
-    formData.append("productPrice", productPrice);
-    formData.append("deliveryPrice", deliveryPrice);
-    formData.append("pompomPrice", pompomPrice);
+                let deliveryPrice = (selectedOption === "pickYourself") ? 0 : (total > 500 ? 0 :
+                    fixedDeliveryPrice);
 
-    if (artworkSelection.style.display !== "none") {
-        const artworkType = parseInt(document.getElementById("artworkType").value) || null;
-        const artworkDataText = document.getElementById("messageInput").value || null;
-        const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;  
-        formData.append("artworkType", artworkType);
-        formData.append("artworkDataText", artworkDataText);
-        if (artworkDataImage) {
-            formData.append("artworkDataImage", artworkDataImage);
-        }
+                const formData = new FormData();
+                formData.append("productId", productId);
+                formData.append("userId", userId);
+                formData.append("colorId", colorId);
+                formData.append("quantity", quantity);
+                formData.append("beanieType", beanieType);
+                formData.append("PomPomOption", PomPomOption);
+                formData.append("printingId", printingId);
+                formData.append("printingPrice", printingPrice);
+                formData.append("productPrice", productPrice);
+                formData.append("deliveryPrice", deliveryPrice);
+                formData.append("pompomPrice", pompomPrice);
 
-        const leathercolor = document.getElementById("leathercolor").value;
-        const patchLength = parseFloat(document.getElementById("patchLength").value) || null;
-        const patchHeight = parseFloat(document.getElementById("patchHeight").value) || null;
-        const fontStyle = document.getElementById("fontStyle").value || null;
-        const numOfImprint = parseInt(document.getElementById("imprintColors").value);
+                if (artworkSelection.style.display !== "none") {
+                    const artworkType = parseInt(document.getElementById("artworkType").value) || null;
+                    const artworkDataText = document.getElementById("messageInput").value || null;
+                    const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;
+                    formData.append("artworkType", artworkType);
+                    formData.append("artworkDataText", artworkDataText);
+                    if (artworkDataImage) {
+                        formData.append("artworkDataImage", artworkDataImage);
+                    }
 
-        const imprintColors = Array.from(document.querySelectorAll("#additionalDropdowns input"))
-            .map(input => parseInt(input.value, 10));
+                    const leathercolor = document.getElementById("leathercolor").value;
+                    const patchLength = parseFloat(document.getElementById("patchLength").value) || null;
+                    const patchHeight = parseFloat(document.getElementById("patchHeight").value) || null;
+                    const fontStyle = document.getElementById("fontStyle").value || null;
+                    const numOfImprint = parseInt(document.getElementById("imprintColors").value);
 
-        formData.append("leathercolor", leathercolor);
-        formData.append("patchLength", patchLength);
-        formData.append("patchHeight", patchHeight);
-        formData.append("fontStyle", fontStyle);
-        formData.append("numOfImprint", numOfImprint);
-        imprintColors.forEach((color, index) => {
-            formData.append(`imprintColors[${index}]`, color);
-        });
-    }
+                    const imprintColors = Array.from(document.querySelectorAll(
+                            "#additionalDropdowns input"))
+                        .map(input => parseInt(input.value, 10));
 
-    const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;  
-    if (!isAuthenticated) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        let newItem = Object.fromEntries(formData.entries());
+                    formData.append("leathercolor", leathercolor);
+                    formData.append("patchLength", patchLength);
+                    formData.append("patchHeight", patchHeight);
+                    formData.append("fontStyle", fontStyle);
+                    formData.append("numOfImprint", numOfImprint);
+                    imprintColors.forEach((color, index) => {
+                        formData.append(`imprintColors[${index}]`, color);
+                    });
+                }
 
-        cart.push(newItem);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        document.cookie = `cart=${encodeURIComponent(JSON.stringify(cart))}; path=/; max-age=3600; SameSite=Lax`;
+                const artworkDataImage = document.getElementById("fileUpload")?.files[0] || null;
+                if (!isAuthenticated) {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                    let newItem = Object.fromEntries(formData.entries());
 
-        if (artworkDataImage) {
-            const tempFormData = new FormData();
-            tempFormData.append("artworkDataImage", artworkDataImage);
-            tempFormData.append("session_id", "{{ session()->getId() }}");
+                    cart.push(newItem);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    document.cookie =
+                        `cart=${encodeURIComponent(JSON.stringify(cart))}; path=/; max-age=3600; SameSite=Lax`;
 
-            fetch("{{ route('temp_cart_images.upload') }}", {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                },
-                body: tempFormData,
-            })
-            .then(response => response.json())
-            .then(result => console.log("Temp image upload result:", result))
-            .catch(error => console.error("Error uploading temp image:", error));
-        }
+                    if (artworkDataImage) {
+                        const tempFormData = new FormData();
+                        tempFormData.append("artworkDataImage", artworkDataImage);
+                        tempFormData.append("session_id", "{{ session()->getId() }}");
 
-        setTimeout(() => {
-            window.location.href = "{{ route('user.login') }}";
-        }, 2000);
+                        fetch("{{ route('temp_cart_images.upload') }}", {
+                                method: "POST",
+                                headers: {
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                },
+                                body: tempFormData,
+                            })
+                            .then(response => response.json())
+                            .then(result => console.log("Temp image upload result:", result))
+                            .catch(error => console.error("Error uploading temp image:", error));
+                    }
 
-        return;
-    }
+                    setTimeout(() => {
+                        window.location.href = "{{ route('user.login') }}";
+                    }, 2000);
 
-    fetch("{{ route('cart.add') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-        },
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            alert("Product added to cart successfully!");
-            window.location.href = "{{ route('cart') }}";
-        } else {
-            alert("Failed to add product to cart.");
-        }
-    })
-    .catch(error => console.error("Error:", error))
-    .finally(() => {
-        // Revert button state
-        button.disabled = false;
-        button.textContent = originalText;
-        button.classList.remove("loading");
-    });
-});
+                    return;
+                }
+
+                fetch("{{ route('cart.add') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        },
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            alert("Product added to cart successfully!");
+                            window.location.href = "{{ route('cart') }}";
+                        } else {
+                            alert("Failed to add product to cart.");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error))
+                    .finally(() => {
+                        // Revert button state
+                        button.disabled = false;
+                        button.textContent = originalText;
+                        button.classList.remove("loading");
+                    });
+            });
 
 
         });
     </script>
-<script>
-    document.getElementById("fontStyle").addEventListener("change", function() {
-        this.style.fontFamily = this.value;
-    });
-</script>
-<style>
-    button.loading {
-    cursor: not-allowed;
-    opacity: 0.7;
-    position: relative;
-}
-button.loading::after {
-    content: "";
-    position: absolute;
-    right: 10px;
-    border: 2px solid transparent;
-    border-top-color: #fff;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    animation: spin 0.6s linear infinite;
-}
+    <script>
+        document.getElementById("fontStyle").addEventListener("change", function() {
+            this.style.fontFamily = this.value;
+        });
+    </script>
+    <style>
+        button.loading {
+            cursor: not-allowed;
+            opacity: 0.7;
+            position: relative;
+        }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+        button.loading::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            border: 2px solid transparent;
+            border-top-color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 0.6s linear infinite;
+        }
 
-</style>
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
 
-<script src="{{ asset('assetsMain/js/frontend/productDetail.js') }}"></script>  
-@endsection 
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script src="{{ asset('assetsMain/js/frontend/productDetail.js') }}"></script>
+@endsection
