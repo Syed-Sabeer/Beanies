@@ -133,6 +133,7 @@
             <div class="card h-100">
                 <div class="card-header pb-0 d-flex justify-content-between mb-lg-n4">
                     <div class="card-title mb-0">
+                        <h6 style="color: red">Currently in Developement</h6>
                         <h5 class="mb-0">Earning Reports</h5>
                         <small class="text-muted">Weekly Earnings Overview</small>
                     </div>
@@ -202,7 +203,9 @@
         <div class="col-lg-3 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-header">
+                    <h6 style="color: red">Currently in Developement</h6>
                     <div class="d-flex justify-content-between">
+                        
                         <small class="d-block mb-1 text-muted">Sales Overview</small>
                         <p class="card-text text-success">+18.2%</p>
                     </div>
@@ -252,6 +255,7 @@
         <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
             <div class="card">
                 <div class="card-body pb-0">
+                    <h6 style="color: red">Currently in Developement</h6>
                     <div class="card-icon">
                         <span class="badge bg-label-success rounded-pill p-2">
                             <i class='ti ti-credit-card ti-sm'></i>
@@ -271,8 +275,11 @@
         <!-- Source Visit -->
         <div class="col-xl-4 col-md-6 order-2 order-lg-1 mb-4">
             <div class="card">
+                
                 <div class="card-header d-flex justify-content-between">
+                    
                     <div class="card-title mb-0">
+                        <h6 style="color: red">Currently in Developement</h6>
                         <h5 class="mb-0">Source Visits</h5>
                         <small class="text-muted">38.4k Visitors</small>
                     </div>
